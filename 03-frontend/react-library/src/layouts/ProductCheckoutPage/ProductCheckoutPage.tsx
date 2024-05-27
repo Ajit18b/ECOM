@@ -3,11 +3,17 @@ import ProductModel from "../../models/ProductModel";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import { StarReview } from "../Utils/StarReview";
 import { CheckoutAndReview } from "./CheckoutAndReview";
+import { LatestReview } from "./LatestReview";
+import ReviewModel from "../../models/ReviewModel";
 
 export const ProductCheckoutPage = () => {
     const [product, setProduct] = useState<ProductModel>();
     const [isLoading, setIsLoading] = useState(true);
     const [httpError, setHttpError] = useState(null);
+
+    const [reviews, setReviews] = useState<ReviewModel[]>([]);
+    const [totalStars, setTotalStars] = useState(0);
+    const [isLoadingReview, setIsLoadingReview] = useState(true);
 
     const productId = (window.location.pathname).split('/')[2];
 
@@ -39,7 +45,41 @@ export const ProductCheckoutPage = () => {
             setHttpError(error.message);
         })
     }, []);
-    if (isLoading) {
+    useEffect(() => {
+        const fetchProductReviews = async () => {
+            const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByProductId?productId=${productId}`;
+            const responseReviews = await fetch(reviewUrl);
+            if (!responseReviews.ok) {
+                throw new Error("Something went wrong !");
+            }
+            const responseJsonReviews = await responseReviews.json();
+            const responseData = responseJsonReviews._embedded.reviews;
+            const loadedReviews: ReviewModel[] = [];
+            let weightedStarReviews: number = 0;
+            for (const key in responseData) {
+                loadedReviews.push({
+                    id: responseData[key].id,
+                    userEmail: responseData[key].userEmail,
+                    date: responseData[key].date,
+                    rating: responseData[key].rating,
+                    product_id: responseData[key].productId,
+                    reviewDescription: responseData[key].reviewDescription,
+                });
+                weightedStarReviews = weightedStarReviews + responseData[key].rating;
+            }
+            if (loadedReviews) {
+                const round = (Math.round((weightedStarReviews / loadedReviews.length) * 2) / 2).toFixed(1);
+                setTotalStars(Number(round));
+            }
+            setReviews(loadedReviews);
+            setIsLoadingReview(false);
+        };
+        fetchProductReviews().catch((error: any) => {
+            setIsLoadingReview(false);
+            setHttpError(error.message);
+        })
+    }, []);
+    if (isLoading || isLoadingReview) {
         return (
             <SpinnerLoading />
         )
@@ -68,12 +108,13 @@ export const ProductCheckoutPage = () => {
                             <h2>{product?.title}</h2>
                             <h5 className="text-primary">{product?.seller}</h5>
                             <p className="lead">{product?.description}</p>
-                            <StarReview rating={4.5} size={32} />
+                            <StarReview rating={totalStars} size={32} />
                         </div>
                     </div>
                     <CheckoutAndReview product={product} mobile={false} />
                 </div>
                 <hr />
+                <LatestReview reviews={reviews} productId={product?.id} mobile={false} />
             </div>
             <div className="container d-lg-none mt-5 ">
                 <div className="d-flex justify-content-center align-items-center">
@@ -89,11 +130,12 @@ export const ProductCheckoutPage = () => {
                         <h2>{product?.title}</h2>
                         <h5 className="text-primary">{product?.seller}</h5>
                         <p className="lead">{product?.description}</p>
-                        <StarReview rating={4.5} size={32} />
+                        <StarReview rating={totalStars} size={32} />
                     </div>
                 </div>
                 <CheckoutAndReview product={product} mobile={true} />
                 <hr />
+                <LatestReview reviews={reviews} productId={product?.id} mobile={true} />
             </div>
         </div >
     );

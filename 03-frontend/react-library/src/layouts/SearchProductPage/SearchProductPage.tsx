@@ -18,7 +18,7 @@ export const SearchProductPage = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const baseUrl: string = "http://192.168.7.20:8080/api/products";
+            const baseUrl: string = "http://localhost:8080/api/products";
             let url: string = '';
             if (searchUrl === '') {
                 url = `${baseUrl}?page=${currentPage - 1}&size=${productsPerPage}`;

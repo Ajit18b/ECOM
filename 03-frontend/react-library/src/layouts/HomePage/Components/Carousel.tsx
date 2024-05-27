@@ -11,7 +11,7 @@ export const Carousel = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const baseUrl: string = "http://192.168.7.20:8080/api/products";
+            const baseUrl: string = "http://localhost:8080/api/products";
             const url: string = `${baseUrl}?page=0&size=20`;
             const response = await fetch(url);
             if (!response.ok) {
