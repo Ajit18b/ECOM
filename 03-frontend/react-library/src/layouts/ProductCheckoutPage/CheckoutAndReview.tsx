@@ -7,8 +7,8 @@ export const CheckoutAndReview: React.FC<{ product: ProductModel | undefined, mo
             <div className="card-body container">
                 <div className="mt-3">
                     <p>
-                        <b>0/5 </b>
-                        Products checkout
+                        <b>0 </b>
+                        Products added to cart
                     </p>
                     <hr />
                     {props.product && props.product.quantityAvailable && props.product.quantityAvailable > 0 ?
@@ -21,10 +21,10 @@ export const CheckoutAndReview: React.FC<{ product: ProductModel | undefined, mo
                         </h4>
                     }
                     <div className="row">
-                        <p className="col-6 lead">
+                        {/* <p className="col-6 lead">
                             <b>{props.product?.quantity} </b>
                             Quantity
-                        </p>
+                        </p> */}
                         <p className="col-6 lead">
                             <b>{props.product?.quantityAvailable} </b>
                             Available

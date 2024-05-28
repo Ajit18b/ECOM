@@ -5,8 +5,10 @@ import { StarReview } from "../Utils/StarReview";
 import { CheckoutAndReview } from "./CheckoutAndReview";
 import { LatestReview } from "./LatestReview";
 import ReviewModel from "../../models/ReviewModel";
+import { useOktaAuth } from "@okta/okta-react";
 
 export const ProductCheckoutPage = () => {
+    const { authState } = useOktaAuth();
     const [product, setProduct] = useState<ProductModel>();
     const [isLoading, setIsLoading] = useState(true);
     const [httpError, setHttpError] = useState(null);
@@ -14,6 +16,9 @@ export const ProductCheckoutPage = () => {
     const [reviews, setReviews] = useState<ReviewModel[]>([]);
     const [totalStars, setTotalStars] = useState(0);
     const [isLoadingReview, setIsLoadingReview] = useState(true);
+
+    const [currentCount, setCurrentCount] = useState(0);
+    const [isLoadingCurrentCount, setIsLoadingCurrentCount] = useState(true);
 
     const productId = (window.location.pathname).split('/')[2];
 
@@ -79,6 +84,17 @@ export const ProductCheckoutPage = () => {
             setHttpError(error.message);
         })
     }, []);
+    useEffect(() => {
+        const fetchUserCurrentCount = async () => {
+            if (authState && authState.isAuthenticated) {
+                const url = `http:localhost:8080/api/products/currentcounts/count`;
+            }
+        }
+        fetchUserCurrentCount().catch((error: any) => {
+            setIsLoadingCurrentCount(false);
+            setHttpError(error.message);
+        })
+    }, [authState])
     if (isLoading || isLoadingReview) {
         return (
             <SpinnerLoading />

@@ -1,5 +1,6 @@
 import React from "react";
 import ProductModel from "../../../models/ProductModel";
+import { Link } from "react-router-dom";
 export const ReturnProduct: React.FC<{ product: ProductModel }> = (props) => {
     return (
         <div className="col-xs-6 col-sm-6 col-md-4 col-lg-3 mb-3">
@@ -21,7 +22,7 @@ export const ReturnProduct: React.FC<{ product: ProductModel }> = (props) => {
                 }
                 <h6 className="mt-2">{props.product.title}</h6>
                 <p>{props.product.seller}</p>
-                <a className="btn main-color btn-outline-light" href="#">Reserve</a> {/* Provide a valid href */}
+                <Link className="btn main-color btn-outline-light" to={`checkout/${props.product.id}`}>Buy Now</Link> {/* Provide a valid href */}
             </div>
         </div>
     );
