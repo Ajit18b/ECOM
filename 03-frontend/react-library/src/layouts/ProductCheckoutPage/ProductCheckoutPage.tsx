@@ -6,6 +6,7 @@ import { CheckoutAndReview } from "./CheckoutAndReview";
 import { LatestReview } from "./LatestReview";
 import ReviewModel from "../../models/ReviewModel";
 import { useOktaAuth } from "@okta/okta-react";
+import { error } from "console";
 
 export const ProductCheckoutPage = () => {
     const { authState } = useOktaAuth();
@@ -20,19 +21,22 @@ export const ProductCheckoutPage = () => {
     const [currentCount, setCurrentCount] = useState(0);
     const [isLoadingCurrentCount, setIsLoadingCurrentCount] = useState(true);
 
+    const [isCheckedOut, setIsCheckedOut] = useState(false);
+    const [isLoadingProductCheckedOut, setIsLoadingProductCheckedOut] = useState(true);
+
     const productId = (window.location.pathname).split('/')[2];
 
     useEffect(() => {
         const fetchProduct = async () => {
-            const baseUrl: string = `http://192.168.7.20:8080/api/products/${productId}`;
+            const baseUrl: string = `http://localhost:8080/api/products/${productId}`;
             const url: string = `${baseUrl}?page=0&size=20`;
             const response = await fetch(url);
             if (!response.ok) {
-                throw new Error("Something went wrong !");
+                throw new Error("Something went wrong 1!");
             }
 
             const responseJson = await response.json();
-            const loadedProducts: ProductModel = {
+            const loadedProduct: ProductModel = {
                 id: responseJson.id,
                 title: responseJson.title,
                 seller: responseJson.seller,
@@ -42,20 +46,20 @@ export const ProductCheckoutPage = () => {
                 category: responseJson.category,
                 img: responseJson.img
             };
-            setProduct(loadedProducts);
+            setProduct(loadedProduct);
             setIsLoading(false);
         };
         fetchProduct().catch((error: any) => {
             setIsLoading(false);
             setHttpError(error.message);
         })
-    }, []);
+    }, [isCheckedOut]);
     useEffect(() => {
         const fetchProductReviews = async () => {
             const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByProductId?productId=${productId}`;
             const responseReviews = await fetch(reviewUrl);
             if (!responseReviews.ok) {
-                throw new Error("Something went wrong !");
+                throw new Error("Something went wrong 2!");
             }
             const responseJsonReviews = await responseReviews.json();
             const responseData = responseJsonReviews._embedded.reviews;
@@ -87,15 +91,54 @@ export const ProductCheckoutPage = () => {
     useEffect(() => {
         const fetchUserCurrentCount = async () => {
             if (authState && authState.isAuthenticated) {
-                const url = `http:localhost:8080/api/products/currentcounts/count`;
+                const url = `http://localhost:8080/api/products/secure/currentcounts/count`;
+                const requestOptions = {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+                        "Content-Type": "appliaction/json"
+                    }
+                };
+                const currentCountResponse = await fetch(url, requestOptions);
+                if (!currentCountResponse.ok) {
+                    throw new Error("Something went wrong 12!");
+                }
+                const currentCountResponseJson = await currentCountResponse.json();
+                setCurrentCount(currentCountResponseJson);
             }
+            setIsLoadingCurrentCount(false);
         }
         fetchUserCurrentCount().catch((error: any) => {
             setIsLoadingCurrentCount(false);
             setHttpError(error.message);
         })
-    }, [authState])
-    if (isLoading || isLoadingReview) {
+    }, [authState, isCheckedOut]);
+    useEffect(() => {
+        const fetchUserCheckedOutProduct = async () => {
+            if (authState && authState.isAuthenticated) {
+                const url = `http://localhost:8080/api/products/secure/ischeckedout/byuser/?productId=${productId}`;
+                const requestOptions = {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+                        "Content-Type": "application/json"
+                    }
+                };
+                const productCheckedOut = await fetch(url, requestOptions);
+                if (!productCheckedOut.ok) {
+                    throw new Error("Something went wrong 3");
+                }
+                const productCheckedOutResponseJson = await productCheckedOut.json();
+                setIsCheckedOut(productCheckedOutResponseJson);
+            }
+            setIsLoadingProductCheckedOut(false);
+        }
+        fetchUserCheckedOutProduct().catch((error: any) => {
+            setIsLoadingProductCheckedOut(false);
+            setHttpError(error.message);
+        })
+    }, [authState, isCheckedOut]);
+    if (isLoading || isLoadingReview || isLoadingCurrentCount || isLoadingProductCheckedOut) {
         return (
             <SpinnerLoading />
         )
@@ -107,6 +150,21 @@ export const ProductCheckoutPage = () => {
             </div>
         )
     }
+    async function checkoutProduct() {
+        const url = `http://localhost:8080/api/products/secure/checkout/?productId=${product?.id}`;
+        const requestOptions = {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+                "Content-Type": "application/json"
+            }
+        };
+        const checkoutResponse = await fetch(url, requestOptions);
+        if (!checkoutResponse.ok) {
+            throw new Error("Something went wrong!");
+        }
+        setIsCheckedOut(true);
+    };
     return (
         <div>
             <div className="container d-none d-lg-block">
@@ -127,7 +185,9 @@ export const ProductCheckoutPage = () => {
                             <StarReview rating={totalStars} size={32} />
                         </div>
                     </div>
-                    <CheckoutAndReview product={product} mobile={false} />
+                    <CheckoutAndReview product={product} mobile={false} currentCount={currentCount}
+                        isAuthenticated={authState?.isAuthenticated} isCheckedout={isCheckedOut}
+                        checkoutProduct={checkoutProduct} />
                 </div>
                 <hr />
                 <LatestReview reviews={reviews} productId={product?.id} mobile={false} />
@@ -149,7 +209,9 @@ export const ProductCheckoutPage = () => {
                         <StarReview rating={totalStars} size={32} />
                     </div>
                 </div>
-                <CheckoutAndReview product={product} mobile={true} />
+                <CheckoutAndReview product={product} mobile={true} currentCount={currentCount}
+                    isAuthenticated={authState?.isAuthenticated} isCheckedout={isCheckedOut}
+                    checkoutProduct={checkoutProduct} />
                 <hr />
                 <LatestReview reviews={reviews} productId={product?.id} mobile={true} />
             </div>

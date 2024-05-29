@@ -1,13 +1,31 @@
 import { Link } from "react-router-dom";
 import ProductModel from "../../models/ProductModel";
 
-export const CheckoutAndReview: React.FC<{ product: ProductModel | undefined, mobile: boolean }> = (props) => {
+export const CheckoutAndReview: React.FC<{
+    product: ProductModel | undefined, mobile: boolean,
+    currentCount: number, isAuthenticated: any, isCheckedout: boolean,
+    checkoutProduct: any
+}> = (props) => {
+    function buttonRender() {
+        if (props.isAuthenticated) {
+            if (!props.isCheckedout && props.currentCount < 5) {
+                return (<button onClick={props.checkoutProduct} className="btn btn-success btn-lg">
+                    Add To Cart
+                </button>)
+            } else if (props.isCheckedout) {
+                return (<p><b>Added to cart successfully !</b></p>)
+            } else if (!props.isCheckedout) {
+                return (<p className="text-danger">Cart limit exceeded ! </p>)
+            }
+        }
+        return (<Link to={"/login"} className="btn btn-success btn-lg">Sign in</Link>)
+    }
     return (
         <div className={props.mobile ? 'card d-flex mt-5' : 'card col-3 container d-flex mb-5'}>
             <div className="card-body container">
                 <div className="mt-3">
                     <p>
-                        <b>0 </b>
+                        <b>{props.currentCount} </b>
                         Products added to cart
                     </p>
                     <hr />
@@ -31,7 +49,7 @@ export const CheckoutAndReview: React.FC<{ product: ProductModel | undefined, mo
                         </p>
                     </div>
                 </div>
-                <Link to='/#' className="btn btn-success btn-lg"> Sign in </Link>
+                {buttonRender()}
                 <hr />
                 <p className="mt-3">
                     This number can change untill placing order
