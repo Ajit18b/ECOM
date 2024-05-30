@@ -17,7 +17,8 @@ export const LatestReview: React.FC<{
                             <Review review={eachReview} key={eachReview.id}></Review>
                         ))}
                         <div className="m-3">
-                            <Link type="button" className="btn main-color btn-md text-white" to="#">
+                            <Link type="button" className="btn main-color btn-md text-white"
+                                to={`/reviewlist/${props.productId}`} >
                                 all review
                             </Link>
                         </div>
@@ -30,6 +31,6 @@ export const LatestReview: React.FC<{
                     </div>
                 }
             </div>
-        </div>
+        </div >
     );
 }

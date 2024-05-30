@@ -7,6 +7,7 @@ import { LatestReview } from "./LatestReview";
 import ReviewModel from "../../models/ReviewModel";
 import { useOktaAuth } from "@okta/okta-react";
 import { error } from "console";
+import ReviewRequestModel from "../../models/ReviewRequestModel";
 
 export const ProductCheckoutPage = () => {
     const { authState } = useOktaAuth();
@@ -17,6 +18,8 @@ export const ProductCheckoutPage = () => {
     const [reviews, setReviews] = useState<ReviewModel[]>([]);
     const [totalStars, setTotalStars] = useState(0);
     const [isLoadingReview, setIsLoadingReview] = useState(true);
+    const [isReviewLeft, setIsReviewLeft] = useState(false);
+    const [isLoadingUserReview, setIsLoadingUserReview] = useState(true);
 
     const [currentCount, setCurrentCount] = useState(0);
     const [isLoadingCurrentCount, setIsLoadingCurrentCount] = useState(true);
@@ -87,7 +90,34 @@ export const ProductCheckoutPage = () => {
             setIsLoadingReview(false);
             setHttpError(error.message);
         })
-    }, []);
+    }, [isReviewLeft]);
+
+    useEffect(() => {
+        const fetchUserReviewProduct = async () => {
+            if (authState && authState.isAuthenticated) {
+                const url = `http://localhost:8080/api/reviews/secure/user/product/?productId=${productId}`;
+                const requestOptions = {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+                        "Content-Type": "application/json"
+                    }
+                };
+                const userReview = await fetch(url, requestOptions);
+                if (!userReview.ok) {
+                    throw new Error("Something went wrong ");
+                }
+                const userReviewResponseJson = await userReview.json();
+                setIsReviewLeft(userReviewResponseJson);
+            }
+            setIsLoadingUserReview(false);
+        }
+        fetchUserReviewProduct().catch((error: any) => {
+            setIsLoadingReview(false);
+            setHttpError(error.message);
+        })
+    })
+
     useEffect(() => {
         const fetchUserCurrentCount = async () => {
             if (authState && authState.isAuthenticated) {
@@ -138,7 +168,7 @@ export const ProductCheckoutPage = () => {
             setHttpError(error.message);
         })
     }, [authState, isCheckedOut]);
-    if (isLoading || isLoadingReview || isLoadingCurrentCount || isLoadingProductCheckedOut) {
+    if (isLoading || isLoadingReview || isLoadingCurrentCount || isLoadingProductCheckedOut || isLoadingUserReview) {
         return (
             <SpinnerLoading />
         )
@@ -165,6 +195,27 @@ export const ProductCheckoutPage = () => {
         }
         setIsCheckedOut(true);
     };
+    async function submitReview(starInput: number, reviewDescription: string) {
+        let productId: number = 0;
+        if (product?.id) {
+            productId = product.id;
+        }
+        const reviewRequestModel = new ReviewRequestModel(starInput, productId, reviewDescription);
+        const url = `http://localhost:8080/api/reviews/secure`;
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(reviewRequestModel)
+        };
+        const returnResponse = await fetch(url, requestOptions);
+        if (!returnResponse) {
+            throw new Error("Something went wrong !");
+        }
+        setIsReviewLeft(true);
+    }
     return (
         <div>
             <div className="container d-none d-lg-block">
@@ -187,7 +238,7 @@ export const ProductCheckoutPage = () => {
                     </div>
                     <CheckoutAndReview product={product} mobile={false} currentCount={currentCount}
                         isAuthenticated={authState?.isAuthenticated} isCheckedout={isCheckedOut}
-                        checkoutProduct={checkoutProduct} />
+                        checkoutProduct={checkoutProduct} isReviewLeft={isReviewLeft} submitReview={submitReview} />
                 </div>
                 <hr />
                 <LatestReview reviews={reviews} productId={product?.id} mobile={false} />
@@ -211,7 +262,7 @@ export const ProductCheckoutPage = () => {
                 </div>
                 <CheckoutAndReview product={product} mobile={true} currentCount={currentCount}
                     isAuthenticated={authState?.isAuthenticated} isCheckedout={isCheckedOut}
-                    checkoutProduct={checkoutProduct} />
+                    checkoutProduct={checkoutProduct} isReviewLeft={isReviewLeft} submitReview={submitReview} />
                 <hr />
                 <LatestReview reviews={reviews} productId={product?.id} mobile={true} />
             </div>
