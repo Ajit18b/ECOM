@@ -4,11 +4,17 @@ import com.Ecom.demoEcommerceWeb.dao.CheckoutRepository;
 import com.Ecom.demoEcommerceWeb.dao.ProductRepository;
 import com.Ecom.demoEcommerceWeb.entity.Checkout;
 import com.Ecom.demoEcommerceWeb.entity.Product;
+import com.Ecom.demoEcommerceWeb.responsemodel.CartCurrentOrderResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional
@@ -46,5 +52,28 @@ public class ProductService {
     }
    public int currentCount (String userEmail){
         return checkoutRepository.findProductsByUserEmail(userEmail).size();
+   }
+   public List<CartCurrentOrderResponse> currentOrders(String userEmail) throws Exception{
+        List<CartCurrentOrderResponse> cartCurrentOrderResponses = new ArrayList<>();
+        List<Checkout> checkoutList = checkoutRepository.findProductsByUserEmail(userEmail);
+        List<Long> productIdList = new ArrayList<>();
+        for(Checkout i: checkoutList){
+            productIdList.add(i.getProductId());
+        }
+        List<Product> products = productRepository.findProductsByProductIds(productIdList);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        for(Product product : products){
+            Optional<Checkout> checkout = checkoutList.stream()
+                    .filter(x -> x.getProductId() == product.getId()).findFirst();
+            if(checkout.isPresent()){
+                Date d1 = sdf.parse(checkout.get().getCheckoutDate());
+                Date d2 = sdf.parse(LocalDate.now().toString());
+                TimeUnit time = TimeUnit.DAYS;
+                long diff_time = time.convert(d1.getTime() - d2.getTime(),
+                        TimeUnit.MILLISECONDS);
+                cartCurrentOrderResponses.add(new CartCurrentOrderResponse(product,(int)diff_time));
+            }
+        }
+        return cartCurrentOrderResponses;
    }
 }
