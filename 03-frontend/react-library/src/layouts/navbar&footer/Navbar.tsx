@@ -31,7 +31,7 @@ export const Navbar = () => {
                         </li>
                         {authState.isAuthenticated &&
                             <li className="nav-item">
-                                <NavLink className="nav-link" to={"/cartpage"}>Cart</NavLink>
+                                <NavLink className="nav-link" to={"/cart"}>Cart</NavLink>
                             </li>
                         }
                     </ul>

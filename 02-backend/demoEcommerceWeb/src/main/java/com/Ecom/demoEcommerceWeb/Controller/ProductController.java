@@ -24,6 +24,7 @@ public class ProductController {
         String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
         return productService.currentOrders(userEmail);
     }
+
     @GetMapping("/secure/currentcounts/count")
     public int currentCount(@RequestHeader(value = "Authorization") String token){
         String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
@@ -41,4 +42,17 @@ public class ProductController {
         String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
         return productService.checkoutProduct(userEmail,productId);
     }
+    @PutMapping("/secure/order")
+    public void orderProduct(@RequestHeader(value="Authorization") String token,
+                                @RequestParam Long productId) throws Exception{
+        String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
+        productService.orderProduct(userEmail,productId);
+    }
+    @PutMapping("/secure/remove")
+    public void removeProduct(@RequestHeader(value="Authorization") String token,
+                             @RequestParam Long productId) throws Exception{
+        String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
+        productService.removeProduct(userEmail,productId);
+    }
+
 }

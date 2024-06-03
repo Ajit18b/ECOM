@@ -50,7 +50,7 @@ export const App = () => {
             }
             />
             <Route path="/login/callback" component={LoginCallback} />
-            <SecureRoute path="/cartpage"><CartPage /></SecureRoute>
+            <SecureRoute path="/cart"><CartPage /></SecureRoute>
           </Switch>
         </div>
         <Footer />

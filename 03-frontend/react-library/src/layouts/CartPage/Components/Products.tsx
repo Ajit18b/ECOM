@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CartCurrentProducts from "../../../models/CartCurrentProducts";
 import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { Link } from "react-router-dom";
+import { ProductsModel } from "./ProductsModel";
 
 export const Products = () => {
     const { authState } = useOktaAuth();
@@ -10,6 +11,7 @@ export const Products = () => {
 
     const [cartCurrentProducts, setCartCurrentProducts] = useState<CartCurrentProducts[]>([]);
     const [isLoadingUserProducts, setIsLoadingUserProducts] = useState(true);
+    const [checkout, setCheckout] = useState(false);
     useEffect(() => {
         const fetchUserCurrentProducts = async () => {
             if (authState && authState.isAuthenticated) {
@@ -35,7 +37,7 @@ export const Products = () => {
             setHttpError(error.message);
         });
         window.scrollTo(0, 0);
-    }, [authState]);
+    }, [authState, checkout]);
 
     if (isLoadingUserProducts) {
         return (
@@ -52,64 +54,168 @@ export const Products = () => {
             </div>
         );
     }
-
+    async function orderProduct(productId: number) {
+        const url = `http://localhost:8080/api/products/secure/order/?productId=${productId}`;
+        const requestOptions = {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+                "Content-type": "application/json"
+            }
+        };
+        const returnResponse = await fetch(url, requestOptions);
+        if (!returnResponse.ok) {
+            throw new Error("Something went wrong ");
+        }
+        setCheckout(!checkout);
+    }
+    async function removeProduct(productId: number) {
+        const url = `http://localhost:8080/api/products/secure/remove/?productId=${productId}`;
+        const requestOptions = {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+                "Content-type": "application/json"
+            }
+        };
+        const returnResponse = await fetch(url, requestOptions);
+        if (!returnResponse.ok) {
+            throw new Error("Something went wrong ");
+        }
+        setCheckout(!checkout);
+    }
     return (
-        <div>
+        <div className="container">
             {/* Desktop view */}
             <div className="d-none d-lg-block mt-2">
-                {cartCurrentProducts.length > 0 ?
+                {cartCurrentProducts.length > 0 ? (
                     <>
                         <h5>Current Added Products</h5>
-                        {cartCurrentProducts.map(cartCurrentProduct => (
-                            <div key={cartCurrentProduct.product.id}>
-                                <div className="row mt-3 mb-3">
-                                    <div className="col-4 col-md-4 container">
-                                        {cartCurrentProduct.product?.img ?
-                                            <img src={cartCurrentProduct.product?.img} width="226" height="349" alt="Product" />
-                                            :
-                                            <img src={require("./../../../Images/productDemo.png")} width="226" height="349" alt="Product" />
-                                        }
-                                    </div>
-                                    <div className="card col-3 col-md-3 container d-flex">
-                                        <div className="card-body">
-                                            <div className="mt-3">
-                                                <h4>Order Now</h4>
+                        <div className="row">
+                            {cartCurrentProducts.map((cartCurrentProduct) => (
+                                <div key={cartCurrentProduct.product.id} className="col-12 col-md-6 mb-4">
+                                    <div className="card h-100">
+                                        <div className="row g-0">
+                                            <div className="col-4">
+                                                {cartCurrentProduct.product?.img ? (
+                                                    <img
+                                                        src={cartCurrentProduct.product?.img}
+                                                        className="img-fluid rounded-start"
+                                                        alt="Product"
+                                                    />
+                                                ) : (
+                                                    <img
+                                                        src={require("./../../../Images/productDemo.png")}
+                                                        className="img-fluid rounded-start"
+                                                        alt="Product"
+                                                    />
+                                                )}
                                             </div>
-                                            <div className="list-group mt-3">
-                                                <button className="list-group-item list-group-item-action"
-                                                    aria-current="true" data-bs-toggle="modal"
-                                                    data-bs-target={`#modal${cartCurrentProduct.product.id}`}>
-                                                    Manage Product
-                                                </button>
-                                                <Link to={"search"} className="list-group-item list-group-item-action">
-                                                    Search more product
-                                                </Link>
+                                            <div className="col-8">
+                                                <div className="card-body">
+                                                    <h5 className="card-title">Order Now</h5>
+                                                    <div className="list-group mt-3">
+                                                        <button
+                                                            className="list-group-item list-group-item-action"
+                                                            aria-current="true"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target={`#modal${cartCurrentProduct.product.id}`}
+                                                        >
+                                                            Manage Product
+                                                        </button>
+                                                        <Link to={"search"} className="list-group-item list-group-item-action">
+                                                            Search more products
+                                                        </Link>
+                                                    </div>
+                                                    <hr />
+                                                    <p className="mt-3">Review this product</p>
+                                                    <Link className="btn btn-primary" to={`/checkout/${cartCurrentProduct.product.id}`}>
+                                                        Leave a review
+                                                    </Link>
+                                                </div>
                                             </div>
                                         </div>
-                                        <hr />
-                                        <p className="mt-3">
-                                            review this product
-                                        </p>
-                                        <Link className="btn btn-primary" to={`/checkout/${cartCurrentProduct.product.id}`}>
-                                            Leave a review
-                                        </Link>
                                     </div>
-                                    <hr />
+                                    <ProductsModel cartCurrentProduct={cartCurrentProduct} mobile={false} orderProduct={orderProduct} removeProduct={removeProduct} />
                                 </div>
-                            </div>
-                        ))}
-                    </> :
-                    <>
-                        <h3 className="mt-3">
-                            No products added yet
-                        </h3>
+                            ))}
+                        </div>
+                    </>
+                ) : (
+                    <div className="text-center">
+                        <h3 className="mt-3">No products added yet</h3>
                         <Link className="btn btn-primary" to={"search"}>
                             Get something added to your cart
                         </Link>
-                    </>
-                }
+                    </div>
+                )}
             </div>
             {/* End Desktop view */}
+
+            {/* Mobile view */}
+            <div className="d-lg-none mt-2">
+                {cartCurrentProducts.length > 0 ? (
+                    <>
+                        <h5>Current Added Products</h5>
+                        {cartCurrentProducts.map((cartCurrentProduct) => (
+                            <div key={cartCurrentProduct.product.id} className="mb-4">
+                                <div className="card">
+                                    <div className="row g-0">
+                                        <div className="col-4 text-center">
+                                            {cartCurrentProduct.product?.img ? (
+                                                <img
+                                                    src={cartCurrentProduct.product?.img}
+                                                    className="img-fluid rounded-start"
+                                                    alt="Product"
+                                                />
+                                            ) : (
+                                                <img
+                                                    src={require("./../../../Images/productDemo.png")}
+                                                    className="img-fluid rounded-start"
+                                                    alt="Product"
+                                                />
+                                            )}
+                                        </div>
+                                        <div className="col-8">
+                                            <div className="card-body">
+                                                <h5 className="card-title text-center">Order Now</h5>
+                                                <div className="list-group mt-3">
+                                                    <button
+                                                        className="list-group-item list-group-item-action"
+                                                        aria-current="true"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target={`#modal${cartCurrentProduct.product.id}`}
+                                                    >
+                                                        Manage Product
+                                                    </button>
+                                                    <Link to={"search"} className="list-group-item list-group-item-action">
+                                                        Search more products
+                                                    </Link>
+                                                </div>
+                                                <hr />
+                                                <p className="mt-3 text-center">Review this product</p>
+                                                <Link className="btn btn-primary d-block mx-auto" to={`/checkout/${cartCurrentProduct.product.id}`}>
+                                                    Leave a review
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ProductsModel cartCurrentProduct={cartCurrentProduct} mobile={true} orderProduct={orderProduct} removeProduct={removeProduct} />
+                            </div>
+                        ))}
+                    </>
+                ) : (
+                    <div className="text-center">
+                        <h3 className="mt-3">No products added yet</h3>
+                        <Link className="btn btn-primary d-block mx-auto" to={"search"}>
+                            Get something added to your cart
+                        </Link>
+                    </div>
+                )}
+            </div>
+            {/* End Mobile view */}
         </div>
     );
+
 };
