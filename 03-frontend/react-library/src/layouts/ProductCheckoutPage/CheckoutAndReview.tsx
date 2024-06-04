@@ -9,12 +9,12 @@ export const CheckoutAndReview: React.FC<{
 }> = (props) => {
     function buttonRender() {
         if (props.isAuthenticated) {
-            if (!props.isCheckedout && props.currentCount < 5) {
-                return (<button onClick={props.checkoutProduct} className="btn btn-success btn-lg">
+            if (!props.isCheckedout && props.currentCount < 20) {
+                return (<p><button onClick={props.checkoutProduct} className="btn btn-success btn-lg">
                     Add To Cart
-                </button>)
+                </button><hr /><Link to={"/cart"} className="btn btn-primary btn-sm">View all products in cart</Link></p >)
             } else if (props.isCheckedout) {
-                return (<p><b>Added to cart successfully !</b></p>)
+                return (<p><b>Item added to cart successfully !</b><hr /><Link className="btn btn-primary" to={"/search"}>add more product</Link><hr /><Link to={"/cart"} className="btn btn-outline-info">View all products in cart</Link></p >)
             } else if (!props.isCheckedout) {
                 return (<p className="text-danger">Cart limit exceeded ! </p>)
             }
@@ -25,7 +25,7 @@ export const CheckoutAndReview: React.FC<{
         if (props.isAuthenticated && !props.isReviewLeft) {
             return (<p><LeaveAReview submitReview={props.submitReview} /></p>)
         } else if (props.isAuthenticated && props.isReviewLeft) {
-            return (<p>Thank you for your review !</p>)
+            return (<p>Review added successfully Thank you for your review !</p>)
         }
         return (<div>Sign in to review the product </div>)
     }
@@ -36,6 +36,7 @@ export const CheckoutAndReview: React.FC<{
                     <p>
                         <b>{props.currentCount} </b>
                         Products added to cart
+
                     </p>
                     <hr />
                     {props.product && props.product.quantityAvailable && props.product.quantityAvailable > 0 ?
@@ -44,7 +45,7 @@ export const CheckoutAndReview: React.FC<{
                         </h4>
                         :
                         <h4 className="text-danger">
-                            Wait List
+                            Currently not available
                         </h4>
                     }
                     <div className="row">
@@ -60,9 +61,9 @@ export const CheckoutAndReview: React.FC<{
                 </div>
                 {buttonRender()}
                 <hr />
-                <p className="mt-3">
+                {/* <p className="mt-3">
                     This number can change untill placing order
-                </p>
+                </p> */}
                 {reviewRender()}
             </div>
         </div>

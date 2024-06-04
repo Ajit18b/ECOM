@@ -1,17 +1,20 @@
+import { useState } from "react";
+import { HistoryPage } from "./Components/HistoryPage";
 import { Products } from "./Components/Products";
 
 export const CartPage = () => {
+    const [historyClick, setHistoryClick] = useState(false);
     return (
         <div className="container">
             <div className="mt-3">
                 <nav>
                     <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                        <button className="nav-link active" id="nav-orders-tab" data-bs-toggle="tab"
+                        <button onClick={() => setHistoryClick(false)} className="nav-link active" id="nav-orders-tab" data-bs-toggle="tab"
                             data-bs-target="#nav-orders" type="button" role="tab" aria-controls="nav-orders"
                             aria-selected="true">
-                            Order
+                            Current Order in cart
                         </button>
-                        <button className="nav-link" id="nav-history-tab" data-bs-toggle="tab"
+                        <button onClick={() => setHistoryClick(true)} className="nav-link" id="nav-history-tab" data-bs-toggle="tab"
                             data-bs-target="#nav-history" type="button" role="tab" aria-controls="nav-history"
                             aria-selected="false">
                             Order History
@@ -25,7 +28,7 @@ export const CartPage = () => {
                     </div>
                     <div className="tab-pane fade" id="nav-history" role="tabpanel"
                         aria-labelledby="nav-history-tab">
-                        <p>Order History</p>
+                        {historyClick ? <HistoryPage /> : <></>}
                     </div>
                 </div>
             </div>
