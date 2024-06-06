@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { PostNewQuerry } from "./Components/PostNewQuerry";
+import { Querries } from "./Components/Querries";
 
 export const SupportPage = () => {
     const [supportsClick, setSupportsClick] = useState(false)
@@ -15,17 +17,17 @@ export const SupportPage = () => {
                         <button onClick={() => setSupportsClick(true)} className="nav-link"
                             id="nav-message-tab" data-bs-toggle="tab" data-bs-target="#nav-message"
                             type="button" role="tab" aria-controls="nav-message" aria-selected="false">
-                            No response yet
+                            pending response
                         </button>
                     </div>
                 </nav>
                 <div className="tab-content" id="nav-tabContent">
                     <div className="tab-pane fade show active" id="nav-send-message" role="tabpanel"
                         aria-labelledby="nav-send-message-tab">
-                        <p>Send new querry</p>
+                        <PostNewQuerry />
                     </div>
                     <div className="tab-pane fade" id="nav-message" role="tabpanel" aria-labelledby="nav-message-tab">
-                        {supportsClick ? <p>Querries</p> : <></>}
+                        {supportsClick ? <Querries /> : <></>}
                     </div>
                 </div>
             </div>
