@@ -16,7 +16,7 @@ export const EComServices = () => {
                     <div className="d-grid gap-2 justify-content-md-start mb-4 mb-lg-3">
                         {authState?.isAuthenticated ?
                             <Link type="button" className="btn main-color btn-outline-light"
-                                to="#"> Contact </Link>
+                                to="/support"> Contact </Link>
                             :
                             <Link className="btn main-color btn-outline-light" to="/login">Sign up</Link>
                         }

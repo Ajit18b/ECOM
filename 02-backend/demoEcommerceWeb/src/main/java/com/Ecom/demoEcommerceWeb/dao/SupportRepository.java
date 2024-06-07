@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface SupportRepository extends JpaRepository<Support,Long> {
 
-    Page<Support> findByUserEmail(@RequestParam("user_email")String userEmail, Pageable pageable);
+    Page<Support> findByUserEmail(@RequestParam("user_email") String userEmail, Pageable pageable);
+    Page<Support> findByClosed(@RequestParam("closed") boolean closed, Pageable pageable);
 
 }
