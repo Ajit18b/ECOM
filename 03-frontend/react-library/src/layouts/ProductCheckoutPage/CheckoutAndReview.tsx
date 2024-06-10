@@ -10,9 +10,17 @@ export const CheckoutAndReview: React.FC<{
     function buttonRender() {
         if (props.isAuthenticated) {
             if (!props.isCheckedout && props.currentCount < 20) {
-                return (<p><button onClick={props.checkoutProduct} className="btn btn-success btn-lg">
-                    Add To Cart
-                </button><hr /><Link to={"/cart"} className="btn btn-primary btn-sm">View all products in cart</Link></p >)
+                return (<p>
+                    <button onClick={props.checkoutProduct} className="btn btn-success btn-lg">
+                        Add To Cart
+                    </button>
+                    <p />
+                    {/* <button onClick={props.checkoutProduct} className="btn btn-primary btn-lg">
+                        Order Now
+                    </button> */}
+                    <hr />
+                    <Link to={"/cart"} className="btn btn-primary btn-sm">View all products in cart</Link>
+                </p >)
             } else if (props.isCheckedout) {
                 return (<p><b>Item added to cart successfully !</b><hr /><Link className="btn btn-primary" to={"/search"}>add more product</Link><hr /><Link to={"/cart"} className="btn btn-outline-info">View all products in cart</Link></p >)
             } else if (!props.isCheckedout) {
@@ -49,10 +57,6 @@ export const CheckoutAndReview: React.FC<{
                         </h4>
                     }
                     <div className="row">
-                        {/* <p className="col-6 lead">
-                            <b>{props.product?.quantity} </b>
-                            Quantity
-                        </p> */}
                         <p className="col-6 lead">
                             <b>{props.product?.quantityAvailable} </b>
                             Available
@@ -61,9 +65,6 @@ export const CheckoutAndReview: React.FC<{
                 </div>
                 {buttonRender()}
                 <hr />
-                {/* <p className="mt-3">
-                    This number can change untill placing order
-                </p> */}
                 {reviewRender()}
             </div>
         </div>

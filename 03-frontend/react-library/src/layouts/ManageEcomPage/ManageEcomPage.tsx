@@ -1,7 +1,11 @@
 import { useOktaAuth } from "@okta/okta-react";
 import { useState } from "react";
 import { Redirect } from "react-router";
-import { AdminQuerries } from "./Components/AdminQuerries";
+import { AdminMessage } from "./Components/AdminMessage";
+import { ChangeQuantityOfProduct } from "./Components/ChangeQuantityOfProduct";
+import { ChangeQuantityOfProducts } from "./Components/ChangeQuantityOfProducts";
+import { AdminMessages } from "./Components/AdminMessages";
+import { AddNewProduct } from "./Components/AddNewProduct";
 
 export const ManageEcomPage = () => {
     const { authState } = useOktaAuth();
@@ -48,15 +52,15 @@ export const ManageEcomPage = () => {
                 <div className="tab-content" id="nav-tabContent">
                     <div className="tab-pane fade show active" id="nav-add-product" role="tabpanel"
                         aria-labelledby="nav-add-product-tab">
-                        Add new product
+                        <AddNewProduct />
                     </div>
                     <div className="tab-pane fade" id="nav-quantity" role="tabpanel"
                         aria-labelledby="nav-quantity-tab">
-                        {changeQuantityOfProductsClick ? <>Change quantity</> : <></>}
+                        {changeQuantityOfProductsClick ? <ChangeQuantityOfProducts /> : <></>}
                     </div>
                     <div className="tab-pane fade" id="nav-querries" role="tabpanel"
                         aria-labelledby="nav-querries-tab">
-                        {querriesClick ? <AdminQuerries /> : <></>}
+                        {querriesClick ? <AdminMessages /> : <></>}
                     </div>
                 </div>
             </div>

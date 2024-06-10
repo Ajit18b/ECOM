@@ -113,7 +113,16 @@ export const Products = () => {
                                             </div>
                                             <div className="col-8">
                                                 <div className="card-body">
-                                                    <h5 className="card-title">Order Now</h5>
+                                                    <h5 className="card-title">
+                                                        <button
+                                                            className="list-group-item list-group-item-action"
+                                                            aria-current="true"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target={`#modal${cartCurrentProduct.product.id}`}
+                                                        >
+                                                            Order Now
+                                                        </button>
+                                                    </h5>
                                                     <div className="list-group mt-3">
                                                         <button
                                                             className="list-group-item list-group-item-action"

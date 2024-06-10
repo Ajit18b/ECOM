@@ -1,8 +1,9 @@
 package com.Ecom.demoEcommerceWeb.config;
 
+import com.Ecom.demoEcommerceWeb.entity.Message;
 import com.Ecom.demoEcommerceWeb.entity.Product;
 import com.Ecom.demoEcommerceWeb.entity.Review;
-import com.Ecom.demoEcommerceWeb.entity.Support;
+//import com.Ecom.demoEcommerceWeb.entity.Support;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -22,11 +23,11 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         };
         config.exposeIdsFor(Product.class);
         config.exposeIdsFor(Review.class);
-        config.exposeIdsFor(Support.class);
+        config.exposeIdsFor(Message.class);
 
         disableHttpMethods(Product.class,config,theUnsupportedActions);
         disableHttpMethods(Review.class,config,theUnsupportedActions);
-        disableHttpMethods(Support.class,config,theUnsupportedActions);
+        disableHttpMethods(Message.class,config,theUnsupportedActions);
         /*Configuration mapping*/
         cors.addMapping(config.getBasePath()+"/**")
                 .allowedOrigins(theAllowedOrigins);

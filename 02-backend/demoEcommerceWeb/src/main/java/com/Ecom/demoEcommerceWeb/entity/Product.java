@@ -27,4 +27,6 @@ public class Product {
     private String category;
     @Column(name = "img")
     private String img;
+    @Column(name="merchant_email")
+    private String MerchantEmail;
 }

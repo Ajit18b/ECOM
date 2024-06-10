@@ -1,14 +1,16 @@
-class SupportModel {
+class MessageModel {
     title: string;
-    querry: string;
+    question: string;
     id?: number;
     userEmail?: string;
     adminEmail?: string;
     response?: string;
     closed?: boolean;
-    constructor(title: string, querry: string) {
+
+    constructor(title: string, question: string) {
         this.title = title;
-        this.querry = querry;
+        this.question = question;
     }
 }
-export default SupportModel;
+
+export default MessageModel;
