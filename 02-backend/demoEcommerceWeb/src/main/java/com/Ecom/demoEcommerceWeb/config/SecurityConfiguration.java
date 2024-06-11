@@ -23,7 +23,8 @@ public class SecurityConfiguration {
                                 .antMatchers("/api/products/secure/**",
                                         "/api/reviews/secure/**",
                                         "/api/messages/secure/**",
-                                        "/api/admin/secure/**")
+                                        "/api/admin/secure/**",
+                                        "/api/merchant/secure/**")
                                 .authenticated())
                 .oauth2ResourceServer()
                 .jwt();

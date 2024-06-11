@@ -6,6 +6,7 @@ class ProductModel{
     quantity?: number;
     quantityAvailable?: number;
     category?: string;
+    merchantEmail?:string;
     img?: string;
 
     constructor(
@@ -16,6 +17,7 @@ class ProductModel{
         quantity:number,
         quantityAvailable:number,
         category:string,
+        merchantEmail:string,
         img:string
     ){
         this.id=id;
@@ -25,6 +27,7 @@ class ProductModel{
         this.quantity=quantity;
         this.quantityAvailable=quantityAvailable;
         this.category=category;
+        this.merchantEmail=merchantEmail;
         this.img=img;
     }
 }

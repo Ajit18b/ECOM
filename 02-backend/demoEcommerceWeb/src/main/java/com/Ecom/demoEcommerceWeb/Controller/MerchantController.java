@@ -3,6 +3,7 @@ package com.Ecom.demoEcommerceWeb.Controller;
 import com.Ecom.demoEcommerceWeb.Service.MerchantService;
 import com.Ecom.demoEcommerceWeb.Utils.ExtractJWT;
 import com.Ecom.demoEcommerceWeb.requestmodels.AddProductRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("http://localhost:3000")
@@ -10,12 +11,35 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/merchant")
 public class MerchantController {
     private MerchantService merchantService;
+    @Autowired
+    public MerchantController(MerchantService merchantService){
+        this.merchantService = merchantService;
+    }
+    @PutMapping("/secure/increase/product/quantity")
+    public void increaseProductQuantity(@RequestHeader(value="Authorization") String token,
+                                        @RequestParam String merchantEmail,
+                                        @RequestParam Long productId) throws Exception {
+        String merchant = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
+        if (merchant == null || !merchant.equals("merchant")) {
+            throw new Exception("Merchant page only");
+        }
+        merchantService.increaseProductQuantity(productId,merchantEmail);
+    }
+//    @PutMapping("/secure/decrease/product/quantity")
+//    public void decreaseProductQuantity(@RequestHeader(value="Authorization") String token,
+//                                        @RequestParam String merchantEmail) throws Exception {
+//        String merchant = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
+//        if (merchant == null || !merchant.equals("merchant")) {
+//            throw new Exception("Merchant page only");
+//        }
+//        merchantService.decreaseProductQuantity(merchantEmail);
+//    }
     @PostMapping("/secure/add/product")
     public void postProduct(@RequestHeader(value = "Authorization") String token,
                             @RequestBody AddProductRequest addProductRequest) throws Exception {
-        String admin = ExtractJWT.payloadJWTExtraction(token,"\"userType\"");
-        if(admin == null || !admin.equals("admin")){
-            throw new Exception("Admin page only");
+        String merchant = ExtractJWT.payloadJWTExtraction(token,"\"userType\"");
+        if(merchant == null || !merchant.equals("merchant")){
+            throw new Exception("Merchant page only");
         }
         merchantService.postProduct(addProductRequest);
     }

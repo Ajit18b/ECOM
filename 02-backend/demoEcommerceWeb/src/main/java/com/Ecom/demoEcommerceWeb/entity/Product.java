@@ -28,5 +28,5 @@ public class Product {
     @Column(name = "img")
     private String img;
     @Column(name="merchant_email")
-    private String MerchantEmail;
+    private String merchantEmail;
 }

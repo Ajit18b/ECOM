@@ -9,5 +9,6 @@ public class AddProductRequest {
     private String description;
     private int quantity;
     private String category;
+    private String merchantEmail;
     private String img;
 }

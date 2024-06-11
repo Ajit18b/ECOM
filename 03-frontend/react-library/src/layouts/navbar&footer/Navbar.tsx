@@ -1,24 +1,30 @@
+import React from 'react';
 import { useOktaAuth } from "@okta/okta-react";
 import { Link, NavLink } from "react-router-dom";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
 
-export const Navbar = () => {
-
+export const Navbar: React.FC = () => {
     const { oktaAuth, authState } = useOktaAuth();
+
     if (!authState) {
-        return <SpinnerLoading />
+        return <SpinnerLoading />;
     }
-    const handelLogout = async () => oktaAuth.signOut();
-    console.log(authState);
+
+    const handleLogout = async () => {
+        await oktaAuth.signOut();
+    };
+    console.log(authState)
+    // Extract the user's name from the authState
+    const userName = authState.idToken?.claims?.name as string;
+
     return (
         <nav className='navbar navbar-expand-lg navbar-dark main-color py-3'>
             <div className='container-fluid'>
-                {/* <span className='navbar-brand'>E-COM</span> */}
                 <span><NavLink className='nav-link navbar-brand' to={"/home"}>E-COM</NavLink></span>
                 <button className='navbar-toggler' type='button'
-                    data-bs-toggler='collapse' data-bs-target='#navbarNavDropdown'
+                    data-bs-toggle='collapse' data-bs-target='#navbarNavDropdown'
                     aria-controls='navbarNavDropdown' aria-expanded='false'
-                    aria-lebel='Toggle Navigation'>
+                    aria-label='Toggle Navigation'>
                     <span className='navbar-toggler-icon'></span>
                 </button>
                 <div className='collapse navbar-collapse' id='navbarNavDropdown'>
@@ -39,6 +45,11 @@ export const Navbar = () => {
                                 <NavLink className='nav-link' to='/admin'>AdminPanel</NavLink>
                             </li>
                         }
+                        {authState.isAuthenticated && authState.accessToken?.claims?.userType === 'merchant' &&
+                            <li className='nav-item'>
+                                <NavLink className='nav-link' to='/merchant'>MerchantPanel</NavLink>
+                            </li>
+                        }
                     </ul>
                     <ul className='navbar-nav ms-auto'>
                         {!authState.isAuthenticated ?
@@ -46,8 +57,9 @@ export const Navbar = () => {
                                 <Link type='button' className='btn btn-outline-light' to='/login'>Sign in</Link>
                             </li>
                             :
-                            <li>
-                                <button className="btn btn-outline-light" onClick={handelLogout}>Logout</button>
+                            <li className='nav-item m-1 d-flex align-items-center'>
+                                {userName && <span className='text-light me-2'>{userName}</span>}
+                                <button className="btn btn-outline-light" onClick={handleLogout}>Logout</button>
                             </li>
                         }
                     </ul>

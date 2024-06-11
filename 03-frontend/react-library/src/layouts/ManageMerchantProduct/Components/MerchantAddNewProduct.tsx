@@ -3,17 +3,16 @@ import { useState } from 'react';
 import AddProductRequest from '../../../models/AddProductRequest';
 
 
-export const AddNewProduct = () => {
+export const MerchantAddNewProduct = () => {
 
     const { authState } = useOktaAuth();
-
     const [title, setTitle] = useState('');
     const [seller, setSeller] = useState('');
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState(0);
     const [category, setCategory] = useState('Category');
-    const [selectedImage, setSelectedImage] = useState<any>(null);
     const [fetchedMerchantEmail, setFetchedMerchantEmail] = useState<any>(null);
+    const [selectedImage, setSelectedImage] = useState<any>(null);
 
     const [displayWarning, setDisplayWarning] = useState(false);
     const [displaySuccess, setDisplaySuccess] = useState(false);
@@ -21,7 +20,6 @@ export const AddNewProduct = () => {
     function categoryField(value: string) {
         setCategory(value);
     }
-
     async function base64ConversionForImages(e: any) {
         if (e.target.files[0]) {
             getBase64(e.target.files[0]);
@@ -40,11 +38,12 @@ export const AddNewProduct = () => {
     }
 
     async function submitNewProduct() {
-        const url = `http://localhost:8080/api/admin/secure/add/product`;
+        const url = `http://localhost:8080/api/merchant/secure/add/product`;
         if (authState?.isAuthenticated && title !== '' && seller !== '' && category !== 'Category'
             && description !== '' && quantity >= 0) {
             const product: AddProductRequest = new AddProductRequest(title, seller, description, quantity, category, fetchedMerchantEmail);
             product.img = selectedImage;
+            product.merchantEmail = fetchedMerchantEmail;
             const requestOptions = {
                 method: 'POST',
                 headers: {
@@ -63,8 +62,8 @@ export const AddNewProduct = () => {
             setDescription('');
             setQuantity(0);
             setCategory('Category');
+            setFetchedMerchantEmail(authState.accessToken?.claims.sub as string);
             setSelectedImage(null);
-            setFetchedMerchantEmail(null);
             setDisplayWarning(false);
             setDisplaySuccess(true);
         } else {
