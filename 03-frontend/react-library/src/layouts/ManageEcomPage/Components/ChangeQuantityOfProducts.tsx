@@ -12,7 +12,7 @@ export const ChangeQuantityOfProducts = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [httpError, setHttpError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [productsPerPage] = useState(5);
+    const [productsPerPage] = useState(20);
     const [totalAmountOfProducts, setTotalAmountOfProducts] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
 

@@ -11,7 +11,7 @@ export const MerchantAddNewProduct = () => {
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState(0);
     const [category, setCategory] = useState('Category');
-    const [fetchedMerchantEmail, setFetchedMerchantEmail] = useState<any>(null);
+    //const [fetchedMerchantEmail, setFetchedMerchantEmail] = useState("");
     const [selectedImage, setSelectedImage] = useState<any>(null);
 
     const [displayWarning, setDisplayWarning] = useState(false);
@@ -37,13 +37,14 @@ export const MerchantAddNewProduct = () => {
         }
     }
 
+
     async function submitNewProduct() {
         const url = `http://localhost:8080/api/merchant/secure/add/product`;
         if (authState?.isAuthenticated && title !== '' && seller !== '' && category !== 'Category'
             && description !== '' && quantity >= 0) {
-            const product: AddProductRequest = new AddProductRequest(title, seller, description, quantity, category, fetchedMerchantEmail);
+            const product: AddProductRequest = new AddProductRequest(title, seller, description, quantity, category,);
             product.img = selectedImage;
-            product.merchantEmail = fetchedMerchantEmail;
+            product.merchantEmail = authState.accessToken?.claims.sub as string;
             const requestOptions = {
                 method: 'POST',
                 headers: {
@@ -62,8 +63,8 @@ export const MerchantAddNewProduct = () => {
             setDescription('');
             setQuantity(0);
             setCategory('Category');
-            setFetchedMerchantEmail(authState.accessToken?.claims.sub as string);
-            setSelectedImage(null);
+            //setFetchedMerchantEmail(authState.accessToken?.claims.sub as string);
+            setSelectedImage(selectedImage);
             setDisplayWarning(false);
             setDisplaySuccess(true);
         } else {

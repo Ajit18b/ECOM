@@ -16,6 +16,8 @@ import { CartPage } from './layouts/CartPage/CartPage';
 import { ManageEcomPage } from './layouts/ManageEcomPage/ManageEcomPage';
 import { MessagesPage } from './layouts/MessagesPage/MessagesPage';
 import { ManageMerchantProduct } from './layouts/ManageMerchantProduct/ManageMerchantProduct';
+import { MerchantRegistration } from './layouts/MerchantRegistration/MerchantRegistration';
+import { UserProfilePage } from './layouts/UserProfilePage/UserProfilePage';
 
 const oktaAuth = new OktaAuth(oktaConfig);
 
@@ -49,6 +51,8 @@ export const App = () => {
             <Route path='/checkout/:productId'>
               <ProductCheckoutPage />
             </Route>
+            <Route path="/merchantRegd"><MerchantRegistration /></Route>
+            <Route path="/userProfilePage"><UserProfilePage /></Route>
             <Route path="/login" render={() => <LoginWidget config={oktaConfig} />
             }
             />

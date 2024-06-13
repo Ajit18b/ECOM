@@ -40,7 +40,7 @@ export const AdminMessage: React.FC<{
                         </div>
                         <div>
                             <button type='button' className='btn btn-primary mt-3' onClick={submitBtn}>
-                                Submit Response
+                                Close Ticket
                             </button>
                         </div>
                     </form>

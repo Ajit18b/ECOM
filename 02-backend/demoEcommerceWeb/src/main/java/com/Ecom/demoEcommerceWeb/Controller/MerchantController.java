@@ -17,23 +17,22 @@ public class MerchantController {
     }
     @PutMapping("/secure/increase/product/quantity")
     public void increaseProductQuantity(@RequestHeader(value="Authorization") String token,
-                                        @RequestParam String merchantEmail,
                                         @RequestParam Long productId) throws Exception {
         String merchant = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
         if (merchant == null || !merchant.equals("merchant")) {
             throw new Exception("Merchant page only");
         }
-        merchantService.increaseProductQuantity(productId,merchantEmail);
+        merchantService.increaseProductQuantity(productId);
     }
-//    @PutMapping("/secure/decrease/product/quantity")
-//    public void decreaseProductQuantity(@RequestHeader(value="Authorization") String token,
-//                                        @RequestParam String merchantEmail) throws Exception {
-//        String merchant = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
-//        if (merchant == null || !merchant.equals("merchant")) {
-//            throw new Exception("Merchant page only");
-//        }
-//        merchantService.decreaseProductQuantity(merchantEmail);
-//    }
+    @PutMapping("/secure/decrease/product/quantity")
+    public void decreaseProductQuantity(@RequestHeader(value="Authorization") String token,
+                                        @RequestParam Long productId) throws Exception {
+        String merchant = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
+        if (merchant == null || !merchant.equals("merchant")) {
+            throw new Exception("Merchant page only");
+        }
+        merchantService.decreaseProductQuantity(productId);
+    }
     @PostMapping("/secure/add/product")
     public void postProduct(@RequestHeader(value = "Authorization") String token,
                             @RequestBody AddProductRequest addProductRequest) throws Exception {
@@ -43,4 +42,15 @@ public class MerchantController {
         }
         merchantService.postProduct(addProductRequest);
     }
+    @DeleteMapping("/secure/delete/product")
+    public void deleteProduct(@RequestHeader(value="Authorization") String token,
+                              @RequestParam Long productId) throws Exception {
+        String merchant = ExtractJWT.payloadJWTExtraction(token, "\"userType\"");
+        if (merchant == null || !merchant.equals("merchant")) {
+            throw new Exception("Merchant page only");
+        }
+        merchantService.deleteProduct(productId);
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.Ecom.demoEcommerceWeb.dao;
 
+import com.Ecom.demoEcommerceWeb.entity.History;
 import com.Ecom.demoEcommerceWeb.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +18,5 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     Page<Product> findByCategory(@RequestParam("category") String category, Pageable pageable);
     @Query("select o from Product o where id in :product_ids")
     List<Product> findProductsByProductIds (@Param("product_ids") List<Long> productId);
-    @Query("select o from Product o where merchant_email in :product_merchant_emails")
-    List<Product> findProductsByMerchantEmail (@Param("product_merchant_emails") String merchantEmail);
-    @Query("select o from Product o where id in :product_ids and merchant_email in :product_merchant_emails")
-    Map<Product,String> findProductsByProductIdsAndMerchantEmail(@Param("product_ids") Long productId, @Param("product_merchant_emails") String merchantEmail);
+    Page<Product> findProductByMerchantEmail(@RequestParam("merchant_email") String merchantEmail, Pageable pageable);
 }

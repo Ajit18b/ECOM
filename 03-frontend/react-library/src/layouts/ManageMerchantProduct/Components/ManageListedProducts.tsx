@@ -4,10 +4,11 @@ import { SpinnerLoading } from '../../Utils/SpinnerLoading';
 import { Pagination } from '../../Utils/Pagination';
 import ProductModel from "../../../models/ProductModel";
 import { ManageListedProduct } from "./ManageListedProduct";
+import { useOktaAuth } from "@okta/okta-react";
 
 
 export const ManageListedProducts = () => {
-
+    const { authState } = useOktaAuth();
     const [products, setProducts] = useState<ProductModel[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [httpError, setHttpError] = useState(null);
@@ -20,7 +21,7 @@ export const ManageListedProducts = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const baseUrl: string = `http://localhost:8080/api/products?page=${currentPage - 1}&size=${productsPerPage}`;
+            const baseUrl: string = `http://localhost:8080/api/products/search/findProductByMerchantEmail/?merchantEmail=${authState?.accessToken?.claims.sub}&page=${currentPage - 1}&size=${productsPerPage}`;
 
             const response = await fetch(baseUrl);
 
@@ -46,6 +47,7 @@ export const ManageListedProducts = () => {
                     quantity: responseData[key].quantity,
                     quantityAvailable: responseData[key].quantityAvailable,
                     category: responseData[key].category,
+                    merchantEmail: responseData[key].category,
                     img: responseData[key].img,
                 });
             }

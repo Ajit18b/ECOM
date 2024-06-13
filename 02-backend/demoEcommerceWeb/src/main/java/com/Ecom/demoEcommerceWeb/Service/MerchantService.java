@@ -1,6 +1,8 @@
 package com.Ecom.demoEcommerceWeb.Service;
 
+import com.Ecom.demoEcommerceWeb.dao.CheckoutRepository;
 import com.Ecom.demoEcommerceWeb.dao.ProductRepository;
+import com.Ecom.demoEcommerceWeb.dao.ReviewRepository;
 import com.Ecom.demoEcommerceWeb.entity.Product;
 import com.Ecom.demoEcommerceWeb.requestmodels.AddProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,40 +11,49 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.Optional;
+
 @Service
 @Transactional
 public class MerchantService {
     private ProductRepository productRepository;
-    @Autowired
-    public MerchantService (ProductRepository productRepository){
-        this.productRepository = productRepository;
-    }
-    public void increaseProductQuantity(Long productId, String merchantEmail) throws Exception {
-        Map<Product, String> productMap = productRepository.findProductsByProductIdsAndMerchantEmail(productId, merchantEmail);
+    private ReviewRepository reviewRepository;
+    private CheckoutRepository checkoutRepository;
 
-        if (productMap.isEmpty()) {
+    @Autowired
+    public MerchantService (ProductRepository productRepository,
+                         ReviewRepository reviewRepository,
+                         CheckoutRepository checkoutRepository) {
+        this.productRepository = productRepository;
+        this.reviewRepository = reviewRepository;
+        this.checkoutRepository = checkoutRepository;
+    }
+    public void increaseProductQuantity(Long productId) throws Exception {
+
+        Optional<Product> product = productRepository.findById(productId);
+
+        if (!product.isPresent()) {
             throw new Exception("Product not found");
         }
 
-        Product product = productMap.keySet().iterator().next();
-        product.setQuantityAvailable(product.getQuantityAvailable() + 1);
-        product.setQuantity(product.getQuantity() + 1);
+        product.get().setQuantityAvailable(product.get().getQuantityAvailable() + 1);
+        product.get().setQuantity(product.get().getQuantity() + 1);
 
-        productRepository.save(product);
+        productRepository.save(product.get());
     }
-/*    public void decreaseProductQuantity(Long productId, String merchantEmail) throws Exception {
-        Map<Product,String> productOptional = productRepository.findProductsByProductIdsAndMerchantEmail(productId, merchantEmail);
 
-        if (!productOptional.isPresent() || productOptional.get().getQuantityAvailable() <= 0 || productOptional.get().getQuantity() <= 0) {
+    public void decreaseProductQuantity(Long productId) throws Exception {
+
+        Optional<Product> product = productRepository.findById(productId);
+
+        if (!product.isPresent() || product.get().getQuantityAvailable() <= 0 || product.get().getQuantity() <= 0) {
             throw new Exception("Product not found or quantity locked");
         }
 
-        Product product = productOptional.get();
-        product.setQuantityAvailable(product.getQuantityAvailable() - 1);
-        product.setQuantity(product.getQuantity() - 1);
+        product.get().setQuantityAvailable(product.get().getQuantityAvailable() - 1);
+        product.get().setQuantity(product.get().getQuantity() - 1);
 
-        productRepository.save(product);
-    }*/
+        productRepository.save(product.get());
+    }
     public void postProduct(AddProductRequest addProductRequest) {
         Product product = new Product();
         product.setTitle(addProductRequest.getTitle());
@@ -54,6 +65,18 @@ public class MerchantService {
         product.setMerchantEmail(addProductRequest.getMerchantEmail());
         product.setImg(addProductRequest.getImg());
         productRepository.save(product);
+    }
+    public void deleteProduct(Long productId) throws Exception {
+
+        Optional<Product> product = productRepository.findById(productId);
+
+        if (!product.isPresent()) {
+            throw new Exception("Product not found");
+        }
+
+        productRepository.delete(product.get());
+        checkoutRepository.deleteAllByProductId(productId);
+        reviewRepository.deleteAllByProductId(productId);
     }
 
 }

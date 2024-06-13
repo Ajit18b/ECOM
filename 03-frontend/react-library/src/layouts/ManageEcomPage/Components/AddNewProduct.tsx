@@ -43,8 +43,9 @@ export const AddNewProduct = () => {
         const url = `http://localhost:8080/api/admin/secure/add/product`;
         if (authState?.isAuthenticated && title !== '' && seller !== '' && category !== 'Category'
             && description !== '' && quantity >= 0) {
-            const product: AddProductRequest = new AddProductRequest(title, seller, description, quantity, category, fetchedMerchantEmail);
+            const product: AddProductRequest = new AddProductRequest(title, seller, description, quantity, category);
             product.img = selectedImage;
+            product.merchantEmail = fetchedMerchantEmail;
             const requestOptions = {
                 method: 'POST',
                 headers: {

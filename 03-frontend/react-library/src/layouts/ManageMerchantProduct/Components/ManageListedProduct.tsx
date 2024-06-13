@@ -17,7 +17,7 @@ export const ManageListedProduct: React.FC<{ product: ProductModel, deleteProduc
     }, []);
 
     async function increaseQuantity() {
-        const url = `http://localhost:8080/api/admin/secure/increase/product/quantity/?productId=${props.product?.id}&&merchantEmail=${props.product.merchantEmail}`;
+        const url = `http://localhost:8080/api/merchant/secure/increase/product/quantity/?productId=${props.product?.id}`;
         const requestOptions = {
             method: 'PUT',
             headers: {
@@ -35,7 +35,7 @@ export const ManageListedProduct: React.FC<{ product: ProductModel, deleteProduc
     }
 
     async function decreaseQuantity() {
-        const url = `http://localhost:8080/api/admin/secure/decrease/product/quantity/?productId=${props.product?.id}`;
+        const url = `http://localhost:8080/api/merchant/secure/decrease/product/quantity/?productId=${props.product?.id}`;
         const requestOptions = {
             method: 'PUT',
             headers: {
@@ -53,7 +53,7 @@ export const ManageListedProduct: React.FC<{ product: ProductModel, deleteProduc
     }
 
     async function deleteProduct() {
-        const url = `http://localhost:8080/api/admin/secure/delete/product/?productId=${props.product?.id}`;
+        const url = `http://localhost:8080/api/merchant/secure/delete/product/?productId=${props.product?.id}`;
         const requestOptions = {
             method: 'DELETE',
             headers: {
