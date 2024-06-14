@@ -105,7 +105,7 @@ export const Products = () => {
                                                     />
                                                 ) : (
                                                     <img
-                                                        src={require("./../../../Images/productDemo.png")}
+                                                        src={require("./../../../Images/productDemo1.png")}
                                                         className="img-fluid rounded-start"
                                                         alt="Product"
                                                     />
@@ -179,7 +179,7 @@ export const Products = () => {
                                                 />
                                             ) : (
                                                 <img
-                                                    src={require("./../../../Images/productDemo.png")}
+                                                    src={require("./../../../Images/productDemo1.png")}
                                                     className="img-fluid rounded-start"
                                                     alt="Product"
                                                 />

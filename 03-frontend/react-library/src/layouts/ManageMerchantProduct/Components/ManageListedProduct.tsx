@@ -72,47 +72,31 @@ export const ManageListedProduct: React.FC<{ product: ProductModel, deleteProduc
     return (
         <div className='card mt-3 shadow p-3 mb-3 bg-body rounded'>
             <div className='row g-0'>
-                <div className='col-md-2'>
-                    <div className='d-none d-lg-block'>
-                        {props.product.img ?
-                            <img src={props.product.img} width='123' height='196' alt='Product' />
-                            :
-                            <img src={require("./../../../Images/productDemo.png")}
-                                width='123' height='196' alt='Product' />
-                        }
-                    </div>
-                    <div className='d-lg-none d-flex justify-content-center align-items-center'>
-                        {props.product.img ?
-                            <img src={props.product.img} width='123' height='196' alt='Product' />
-                            :
-                            <img src={require("./../../../Images/productDemo.png")}
-                                width='123' height='196' alt='Product' />
-                        }
-                    </div>
+                <div className='col-md-2 d-flex justify-content-center align-items-center'>
+                    {props.product.img ?
+                        <img src={props.product.img} width='200' height='200' alt='Product' />
+                        :
+                        <img src={require("./../../../Images/productDemo1.png")} width='123' height='196' alt='Product' />
+                    }
                 </div>
                 <div className='col-md-6'>
                     <div className='card-body'>
                         <h5 className='card-title'>{props.product.seller}</h5>
                         <h4>{props.product.title}</h4>
-                        <p className='card-text'> {props.product.description} </p>
+                        <p className='card-text'>{props.product.description}</p>
                     </div>
                 </div>
-                <div className='mt-3 col-md-4'>
-                    <div className='d-flex justify-content-center algin-items-center'>
-                        <p>Total Quantity: <b>{remaining}</b></p>
-                    </div>
-                    {/* <div className='d-flex justify-content-center align-items-center'>
-                        <p>Product Remaining: <b>{remaining}</b></p>
-                    </div> */}
-                </div>
-                <div className='mt-3 col-md-1'>
-                    <div className='d-flex justify-content-start'>
-                        <button className='m-1 btn btn-md btn-danger' onClick={deleteProduct}>Delete</button>
+                <div className='col-md-4'>
+                    <div className='d-flex flex-column justify-content-center align-items-center h-100'>
+                        <p className='mb-1'>Total Quantity: <b>{remaining}</b></p>
+                        <div className='d-flex'>
+                            <button className='m-1 btn btn-md btn-primary' onClick={increaseQuantity}>Add Quantity</button>
+                            <button className='m-1 btn btn-md btn-warning' onClick={decreaseQuantity}>Decrease Quantity</button>
+                            <button className='m-1 btn btn-md btn-danger' onClick={deleteProduct}>Delete</button>
+                        </div>
+
                     </div>
                 </div>
-                <button className='m1 btn btn-md btn-primary ' onClick={increaseQuantity}>Add Quantity</button>
-                <p />
-                <button className='m1 btn btn-md btn-warning' onClick={decreaseQuantity}>Decrease Quantity</button>
             </div>
         </div>
     );

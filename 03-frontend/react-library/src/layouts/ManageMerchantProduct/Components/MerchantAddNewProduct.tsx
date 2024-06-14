@@ -7,7 +7,7 @@ export const MerchantAddNewProduct = () => {
 
     const { authState } = useOktaAuth();
     const [title, setTitle] = useState('');
-    const [seller, setSeller] = useState('');
+    const [seller, setSeller] = useState(authState?.idToken?.claims.name as string);
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState(0);
     const [category, setCategory] = useState('Category');
@@ -59,7 +59,7 @@ export const MerchantAddNewProduct = () => {
                 throw new Error('Something went wrong!');
             }
             setTitle('');
-            setSeller('');
+            // setSeller('');
             setDescription('');
             setQuantity(0);
             setCategory('Category');
@@ -93,15 +93,15 @@ export const MerchantAddNewProduct = () => {
                     <form method='POST'>
                         <div className='row'>
                             <div className='col-md-6 mb-3'>
-                                <label className='form-label'>Title</label>
+                                <label className='form-label'>Product Title</label>
                                 <input type="text" className='form-control' name='title' required
                                     onChange={e => setTitle(e.target.value)} value={title} />
                             </div>
-                            <div className='col-md-3 mb-3'>
-                                <label className='form-label'> Seller </label>
+                            {/* <div className='col-md-3 mb-3'>
+                                <label className='form-label'> Business Name </label>
                                 <input type="text" className='form-control' name='author' required
-                                    onChange={e => setSeller(e.target.value)} value={seller} />
-                            </div>
+                                    onChange={e => setSeller(e.target.value)} value={seller} readOnly />
+                            </div> */}
                             <div className='col-md-3 mb-3'>
                                 <label className='form-label'> Category</label>
                                 <button className='form-control btn btn-secondary dropdown-toggle' type='button'

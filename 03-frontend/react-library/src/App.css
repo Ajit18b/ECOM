@@ -3,10 +3,10 @@
 }
 
 .header {
-    background-image: linear-gradient( rgba(151, 53, 53, 0.7), rgba(0, 0, 0, 0.7) );
+    background-image: linear-gradient( rgb(23, 199, 226), rgba(211, 30, 33, 0.7) );
     /* , url("./Images/PublicImages/image-2.jpg"); */
     opacity: var(--mainOpacity);
-    height: 25em !important;
+    height: 20em !important;
 }
 
 .dark-overlay {
@@ -19,14 +19,14 @@
   }
 
 .main-color {
-background-color: #0176b4 ;
+background-color: rgb(12, 73, 159) ;
 }
 
  .col-image-left {
     background-image: linear-gradient( rgba(62, 176, 31, 0.7), rgba(0, 0, 0, 0.7) );
     /* , url("./Images/PublicImages/image-2.jpg"); */
     opacity: var(--mainOpacity);
-    height: 25em !important;
+    height: 20em !important;
     /* background-image: url("./Images/PublicImages/image-4.jpg");
     height: 25em !important; */
 }
@@ -35,7 +35,7 @@ background-color: #0176b4 ;
     background-image: linear-gradient( rgba(36, 91, 180, 0.7), rgba(0, 0, 0, 0.7) );
     /* , url("./Images/PublicImages/image-2.jpg"); */
     opacity: var(--mainOpacity);
-    height: 25em !important;
+    height: 20em !important;
     /* background-image: url("./Images/PublicImages/image-1.jpg");
     height: 25em !important; */
 }
@@ -44,7 +44,7 @@ background-color: #0176b4 ;
     background-image: linear-gradient( rgba(42, 225, 241, 0.7), rgba(173, 4, 4, 0.7) );
     /* , url("./Images/PublicImages/image-2.jpg"); */
     opacity: var(--mainOpacity);
-    height: 25em !important;
+    height: 15em !important;
     /* background-image: url("./Images/PublicImages/image-3.jpg");
     height: 25em !important; */
     width: "720"
@@ -65,3 +65,16 @@ background-color: #0176b4 ;
     pointer-events: none;
     cursor: default;
  }
+
+ .carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+}
+
+.carousel-control-prev {
+    left: -5%;
+}
+
+.carousel-control-next {
+    right: -5%;
+}

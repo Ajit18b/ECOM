@@ -45,8 +45,8 @@ export const ManageMerchantProduct = () => {
                                 </svg>
                                 Listed Products
                             </button>
-                            <button onClick={querriesClickFunction} className="nav-link" id="nav-quantity-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-quantity" type="button" role="tab" aria-controls="nav-quantity"
+                            <button onClick={querriesClickFunction} className="nav-link" id="nav-support-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-support" type="button" role="tab" aria-controls="nav-support"
                                 aria-selected="true">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="25" fill="currentColor" className="bi bi-chat-left-dots" viewBox="0 0 16 16">
                                     <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
@@ -65,8 +65,8 @@ export const ManageMerchantProduct = () => {
                             aria-labelledby="nav-quantity-tab">
                             {changeQuantityOfProductsClick ? <ManageListedProducts /> : <></>}
                         </div>
-                        <div className="tab-pane fade show active" id="nav-add-product" role="tabpanel"
-                            aria-labelledby="nav-add-product-tab">
+                        <div className="tab-pane fade" id="nav-support" role="tabpanel"
+                            aria-labelledby="nav-support-tab">
                             <MessagesPage />
                         </div>
                     </div>

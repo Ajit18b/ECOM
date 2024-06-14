@@ -24,7 +24,7 @@ export const ProductsModel: React.FC<{ cartCurrentProduct: CartCurrentProducts, 
                                             <img src={props.cartCurrentProduct.product?.img}
                                                 width="56" height="87" alt="Product" />
                                             :
-                                            <img src={require("./../../../Images/productDemo.png")}
+                                            <img src={require("./../../../Images/productDemo1.png")}
                                                 width="56" height="87" alt="Product" />
                                         }
                                     </div>

@@ -76,7 +76,7 @@ export const ChangeQuantityOfProduct: React.FC<{ product: ProductModel, deletePr
                     {props.product.img ?
                         <img src={props.product.img} width='200' height='200' alt='Product' />
                         :
-                        <img src={require("./../../../Images/productDemo.png")} width='123' height='196' alt='Product' />
+                        <img src={require("./../../../Images/productDemo1.png")} width='123' height='196' alt='Product' />
                     }
                 </div>
                 <div className='col-md-6'>

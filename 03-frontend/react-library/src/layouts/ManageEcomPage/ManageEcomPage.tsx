@@ -6,6 +6,7 @@ import { ChangeQuantityOfProduct } from "./Components/ChangeQuantityOfProduct";
 import { ChangeQuantityOfProducts } from "./Components/ChangeQuantityOfProducts";
 import { AdminMessages } from "./Components/AdminMessages";
 import { AddNewProduct } from "./Components/AddNewProduct";
+import { MerchantApplications } from "./Components/MerchantApplications";
 
 export const ManageEcomPage = () => {
     const { authState } = useOktaAuth();
@@ -86,7 +87,7 @@ export const ManageEcomPage = () => {
                     </div>
                     <div className="tab-pane fade" id="nav-merchant-application" role="tabpanel"
                         aria-labelledby="nav-querries-tab">
-                        Merchant Applications
+                        {/* <MerchantApplications /> */}
                     </div>
                 </div>
             </div>

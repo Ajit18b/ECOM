@@ -70,14 +70,14 @@ export const HistoryPage = () => {
                                             {history.img ?
                                                 <img src={history.img} width={200} height={200} alt="Product" />
                                                 :
-                                                <img src={require("./../../../Images/productDemo.png")} width={200} height={200} alt="Default" />
+                                                <img src={require("./../../../Images/productDemo1.png")} width={200} height={200} alt="Default" />
                                             }
                                         </div>
                                         <div className="d-lg-none d-flex justify-content-center align-items-center">
                                             {history.img ?
                                                 <img src={history.img} width={200} height={200} alt="Product" />
                                                 :
-                                                <img src={require("./../../../Images/productDemo.png")} width={200} height={200} alt="Default" />
+                                                <img src={require("./../../../Images/productDemo1.png")} width={200} height={200} alt="Default" />
                                             }
                                         </div>
                                     </div>

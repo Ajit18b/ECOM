@@ -3,7 +3,7 @@ import ProductModel from "../../../models/ProductModel";
 import { Link } from "react-router-dom";
 export const ReturnProduct: React.FC<{ product: ProductModel }> = (props) => {
     return (
-        <div className="col-xs-6 col-sm-6 col-md-4 col-lg-3 mb-3">
+        <div className="col-xs-6 col-sm-6 col-md-4 col-lg-2 mb-3">
             <div className="text-center">
                 <Link to={`checkout/${props.product.id}`}>
                     {props.product.img ?
@@ -15,7 +15,7 @@ export const ReturnProduct: React.FC<{ product: ProductModel }> = (props) => {
                         />
                         :
                         <img
-                            src={require('D:\\E_commerce_demo\\03-frontend\\react-library\\src\\Images\\productDemo.png')}
+                            src={require('./../../../Images/productDemo1.png')}
                             width="151"
                             height="151"
                             alt="product"

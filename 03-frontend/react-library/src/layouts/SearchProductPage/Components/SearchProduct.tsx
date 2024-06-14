@@ -9,14 +9,14 @@ export const SearchProduct: React.FC<{ product: ProductModel }> = (props) => {
                     <div className="d-none d-lg-block">
                         {props.product.img ?
                             <img src={props.product.img}
-                                width="123"
-                                height="196"
+                                width="150"
+                                height="150"
                                 alt="Product"
                             />
                             :
                             <img src={require("../../../Images/productDemo1.png")}
-                                width="123"
-                                height="196"
+                                width="150"
+                                height="150"
                                 alt="Product"
                             />
                         }
@@ -25,14 +25,14 @@ export const SearchProduct: React.FC<{ product: ProductModel }> = (props) => {
                     align-items-center">
                         {props.product.img ?
                             <img src={props.product.img}
-                                width="123"
-                                height="196"
+                                width="150"
+                                height="150"
                                 alt="Product"
                             />
                             :
                             <img src={require("../../../Images/productDemo1.png")}
-                                width="123"
-                                height="196"
+                                width="150"
+                                height="150"
                                 alt="Product"
                             />
                         }

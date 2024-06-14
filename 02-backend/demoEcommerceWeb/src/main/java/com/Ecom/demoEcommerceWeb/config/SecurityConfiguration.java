@@ -24,7 +24,8 @@ public class SecurityConfiguration {
                                         "/api/reviews/secure/**",
                                         "/api/messages/secure/**",
                                         "/api/admin/secure/**",
-                                        "/api/merchant/secure/**")
+                                        "/api/merchant/secure/**",
+                                        "/api/merchantApplication/secure/**")
                                 .authenticated())
                 .oauth2ResourceServer()
                 .jwt();

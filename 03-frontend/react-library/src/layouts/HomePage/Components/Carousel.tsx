@@ -12,7 +12,7 @@ export const Carousel = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             const baseUrl: string = "http://localhost:8080/api/products";
-            const url: string = `${baseUrl}?page=0&size=20`;
+            const url: string = `${baseUrl}?page=0&size=54`;
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error("Something went wrong !");
@@ -56,65 +56,71 @@ export const Carousel = () => {
     return (
         <div className="container mt-5" style={{ height: 1000 }}>
             <div className="homepage-carousel-title">
-                <h3>demo product</h3>
+                <h3>Explore Displayed Products</h3>
             </div>
             <div id="carouselExampleControls" className="carousel carousel-dark slid mt-5 d-none d-lg-block" data-bs-interval="false">
                 {/*Desktop*/}
-                <div className="carousel-inner">
-                    <div className="carousel-item active">
-                        <div className="row d-flex justify-content-center align-items-center">
-                            {products.slice(0, 3).map(product => (
-                                <ReturnProduct product={product} key={product.id} />
-                            ))}
+                <div id="carouselExampleControls" className="carousel carousel-dark slid mt-5 d-none d-lg-block" data-bs-interval="false">
+                    {/* Desktop */}
+                    <div className="carousel-inner">
+                        <div className="carousel-item active">
+                            <div className="row d-flex justify-content-center align-items-center">
+                                {products.slice(0, 6).map(product => (
+                                    <ReturnProduct product={product} key={product.id} />
+                                ))}
+                            </div>
+                        </div>
+                        <div className="carousel-item">
+                            <div className="row d-flex justify-content-center align-items-center">
+                                {products.slice(6, 12).map(product => (
+                                    <ReturnProduct product={product} key={product.id} />
+                                ))}
+                            </div>
+                        </div>
+                        <div className="carousel-item">
+                            <div className="row d-flex justify-content-center align-items-center">
+                                {products.slice(12, 18).map(product => (
+                                    <ReturnProduct product={product} key={product.id} />
+                                ))}
+                            </div>
                         </div>
                     </div>
-                    <div className="carousel-item">
-                        <div className="row d-flex justify-content-center align-items-center">
-                            {products.slice(3, 6).map(product => (
-                                <ReturnProduct product={product} key={product.id} />
-                            ))}
-                        </div>
-                    </div>
-                    <div className="carousel-item">
-                        <div className="row d-flex justify-content-center align-items-center">
-                            {products.slice(6, 9).map(product => (
-                                <ReturnProduct product={product} key={product.id} />
-                            ))}
-                        </div>
-                    </div>
+                    {/* Buttons outside carousel-inner */}
+                    <button className="carousel-control-prev" type="button"
+                        data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span className="visually-hidden">Previous</span>
+                    </button>
+                    <button className="carousel-control-next" type="button"
+                        data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span className="visually-hidden">Next</span>
+                    </button>
                 </div>
 
-                <button className="carousel-control-prev" type="button"
-                    data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Previous</span>
-                </button>
-                <button className="carousel-control-next" type="button"
-                    data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Next</span>
-                </button>
+
+
             </div>
             <div id="carouselExampleControls1" className="carousel carousel-dark slid mt-5 d-none d-lg-block" data-bs-interval="false">
                 {/*Desktop*/}
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                         <div className="row d-flex justify-content-center align-items-center">
-                            {products.slice(9, 12).map(product => (
+                            {products.slice(18, 24).map(product => (
                                 <ReturnProduct product={product} key={product.id} />
                             ))}
                         </div>
                     </div>
                     <div className="carousel-item">
                         <div className="row d-flex justify-content-center align-items-center">
-                            {products.slice(12, 15).map(product => (
+                            {products.slice(24, 30).map(product => (
                                 <ReturnProduct product={product} key={product.id} />
                             ))}
                         </div>
                     </div>
                     <div className="carousel-item">
                         <div className="row d-flex justify-content-center align-items-center">
-                            {products.slice(15, 18).map(product => (
+                            {products.slice(30, 36).map(product => (
                                 <ReturnProduct product={product} key={product.id} />
                             ))}
                         </div>
@@ -128,6 +134,43 @@ export const Carousel = () => {
                 </button>
                 <button className="carousel-control-next" type="button"
                     data-bs-target="#carouselExampleControls1" data-bs-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div id="carouselExampleControls2" className="carousel carousel-dark slid mt-5 d-none d-lg-block" data-bs-interval="false">
+                {/*Desktop*/}
+                <div className="carousel-inner">
+                    <div className="carousel-item active">
+                        <div className="row d-flex justify-content-center align-items-center">
+                            {products.slice(36, 42).map(product => (
+                                <ReturnProduct product={product} key={product.id} />
+                            ))}
+                        </div>
+                    </div>
+                    <div className="carousel-item">
+                        <div className="row d-flex justify-content-center align-items-center">
+                            {products.slice(42, 48).map(product => (
+                                <ReturnProduct product={product} key={product.id} />
+                            ))}
+                        </div>
+                    </div>
+                    <div className="carousel-item">
+                        <div className="row d-flex justify-content-center align-items-center">
+                            {products.slice(48, 54).map(product => (
+                                <ReturnProduct product={product} key={product.id} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <button className="carousel-control-prev" type="button"
+                    data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Previous</span>
+                </button>
+                <button className="carousel-control-next" type="button"
+                    data-bs-target="#carouselExampleControls2" data-bs-slide="next">
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                 </button>

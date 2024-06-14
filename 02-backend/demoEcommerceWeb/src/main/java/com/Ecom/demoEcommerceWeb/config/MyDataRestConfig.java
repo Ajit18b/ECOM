@@ -1,5 +1,6 @@
 package com.Ecom.demoEcommerceWeb.config;
 
+import com.Ecom.demoEcommerceWeb.entity.MerchantApplication;
 import com.Ecom.demoEcommerceWeb.entity.Message;
 import com.Ecom.demoEcommerceWeb.entity.Product;
 import com.Ecom.demoEcommerceWeb.entity.Review;
@@ -24,10 +25,12 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         config.exposeIdsFor(Product.class);
         config.exposeIdsFor(Review.class);
         config.exposeIdsFor(Message.class);
+        config.exposeIdsFor(MerchantApplication.class);
 
         disableHttpMethods(Product.class,config,theUnsupportedActions);
         disableHttpMethods(Review.class,config,theUnsupportedActions);
         disableHttpMethods(Message.class,config,theUnsupportedActions);
+        disableHttpMethods(MerchantApplication.class,config,theUnsupportedActions);
         /*Configuration mapping*/
         cors.addMapping(config.getBasePath()+"/**")
                 .allowedOrigins(theAllowedOrigins);

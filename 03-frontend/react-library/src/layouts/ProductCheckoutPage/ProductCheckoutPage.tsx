@@ -223,9 +223,9 @@ export const ProductCheckoutPage = () => {
                     <div className="col-sm-2 col-md-2">
                         {
                             product?.img ?
-                                <img src={product?.img} width="226" height="349" alt="Product" />
+                                <img src={product?.img} width="270" height="270" alt="Product" />
                                 :
-                                <img src={require("./../../Images/productDemo1.png")} width="226" height="349" alt="Product" />
+                                <img src={require("./../../Images/productDemo1.png")} width="270" height="270" alt="Product" />
                         }
                     </div>
                     <div className="col-4 col-md-4 container">
@@ -247,9 +247,9 @@ export const ProductCheckoutPage = () => {
                 <div className="d-flex justify-content-center align-items-center">
                     {
                         product?.img ?
-                            <img src={product?.img} width="226" height="349" alt="Product" />
+                            <img src={product?.img} width="270" height="270" alt="Product" />
                             :
-                            <img src={require("./../../Images/productDemo1.png")} width="226" height="349" alt="Product" />
+                            <img src={require("./../../Images/productDemo1.png")} width="270" height="270" alt="Product" />
                     }
                 </div>
                 <div className="mt-4">
