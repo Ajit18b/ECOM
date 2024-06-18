@@ -51,6 +51,9 @@ public class MerchantApplication {
     @Column(name="admin_email")
     private String adminEmail;
 
+    @Column(name="response")
+    private String response;
+
     @Column(name="approval")
     private boolean approval;
 }

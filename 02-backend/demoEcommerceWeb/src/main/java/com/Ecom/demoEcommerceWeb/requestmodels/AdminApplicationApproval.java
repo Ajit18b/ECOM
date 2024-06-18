@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class AdminApplicationApproval {
     private Long id;
+    private String response;
 }

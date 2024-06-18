@@ -1,11 +1,9 @@
 import { useOktaAuth } from '@okta/okta-react';
 import { useEffect, useState } from 'react';
 
-import MessageModel from '../../../models/MessageModel';
+
 import { Pagination } from '../../Utils/Pagination';
 import { SpinnerLoading } from '../../Utils/SpinnerLoading';
-import { AdminMessage } from './AdminMessage';
-import AdminMessageRequest from '../../../models/AdminMessageRequest';
 import MerchantApplicationModel from '../../../models/MerchantApplicationModel';
 import MerchantApplicationResponse from '../../../models/MerchantApplicationResponse';
 import { MerchantApplication } from './MerchantApplication';
@@ -32,7 +30,7 @@ export const MerchantApplications = () => {
     useEffect(() => {
         const fetchMerchantApplications = async () => {
             if (authState && authState.isAuthenticated) {
-                const url = `http://localhost:8080/api/merchantApplications/search/findByApproval/?approval=false&page=${currentPage - 1}&size=${appliactionsPerPage}`;
+                const url = `http://localhost:8080/api/merchantApplications/search/findByApproval/?approval=false&response=null&page=${currentPage - 1}&size=${appliactionsPerPage}`;
                 const requestOptions = {
                     method: 'GET',
                     headers: {
@@ -46,7 +44,7 @@ export const MerchantApplications = () => {
                 }
                 const applicationResponseJson = await applicationResponse.json();
 
-                setApplications(applicationResponseJson._embedded.messages);
+                setApplications(applicationResponseJson._embedded.merchantApplications);
                 setTotalPages(applicationResponseJson.page.totalPages);
             }
             setIsLoadingApplications(false);
@@ -73,10 +71,10 @@ export const MerchantApplications = () => {
     }
 
 
-    async function submitResponseToApplication(id: number) {
-        const url = `http://localhost:8080/api/merchantApplications/secure/admin/merchantApplication`;
-        if (authState && authState?.isAuthenticated && id !== null) {
-            const merchantApplicationResponseModel: MerchantApplicationResponse = new MerchantApplicationResponse(id);
+    async function submitResponseToApplication(id: number, response: string) {
+        const url = `http://localhost:8080/api/merchantApplications/secure/admin/application`;
+        if (authState && authState?.isAuthenticated && id !== null && response !== '') {
+            const merchantApplicationResponseModel: MerchantApplicationResponse = new MerchantApplicationResponse(id, response);
             const requestOptions = {
                 method: 'PUT',
                 headers: {
@@ -93,6 +91,26 @@ export const MerchantApplications = () => {
             setBtnSubmit(!btnSubmit);
         }
     }
+    async function submitDeclineResponseToApplication(id: number, response: string) {
+        const url = `http://localhost:8080/api/merchantApplications/secure/admin/application`;
+        if (authState && authState?.isAuthenticated && id !== null && response !== '') {
+            const merchantApplicationResponseModel: MerchantApplicationResponse = new MerchantApplicationResponse(id, response);
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(merchantApplicationResponseModel)
+            };
+
+            const applicationAdminRequestModelResponse = await fetch(url, requestOptions);
+            if (!applicationAdminRequestModelResponse.ok) {
+                throw new Error('Something went wrong!');
+            }
+            setBtnSubmit(btnSubmit);
+        }
+    }
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -102,7 +120,7 @@ export const MerchantApplications = () => {
                 <>
                     <h5>Pending Tickets to Response: </h5>
                     {appliactions.map(application => (
-                        <MerchantApplication application={application} key={application.id} submitResponseToQuestion={undefined} />
+                        <MerchantApplication application={application} key={application.id} submitResponseToApplication={submitResponseToApplication} submitDeclineResponseToApplication={submitDeclineResponseToApplication} />
                     ))}
                 </>
                 :

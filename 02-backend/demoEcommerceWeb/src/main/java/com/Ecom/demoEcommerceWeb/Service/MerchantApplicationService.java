@@ -34,6 +34,7 @@ public class MerchantApplicationService {
             throw new Exception("Application not found");
         }
         merchantApplication.get().setAdminEmail(userEmail);
+        merchantApplication.get().setResponse(adminApplicationApproval.getResponse());
         merchantApplication.get().setApproval(true);
         merchantApplicationRepository.save(merchantApplication.get());
     }

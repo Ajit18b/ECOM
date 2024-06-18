@@ -1,7 +1,9 @@
 class MerchantApplicationResponse {
     id: number;
-    constructor(id: number) {
+    response: string;
+    constructor(id: number,response:string) {
         this.id = id;
+        this.response = response;
     }
 }
 

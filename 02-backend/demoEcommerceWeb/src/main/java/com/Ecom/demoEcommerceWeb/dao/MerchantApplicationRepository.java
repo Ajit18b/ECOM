@@ -9,4 +9,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface MerchantApplicationRepository extends JpaRepository <MerchantApplication,Long>{
     Page<MerchantApplication> findByMerchantEmail(@RequestParam("merchant_email")String merchantEmail, Pageable pageable);
     Page<MerchantApplication> findByApproval(@RequestParam("approval")boolean approval,Pageable pageable);
+    Page<MerchantApplication> findByResponse(@RequestParam("response")String response,Pageable pageable);
 }

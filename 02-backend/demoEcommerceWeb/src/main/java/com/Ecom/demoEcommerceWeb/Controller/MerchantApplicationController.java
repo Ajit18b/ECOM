@@ -11,7 +11,7 @@ import javax.validation.Valid;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
-@RequestMapping("/api/merchantApplication")
+@RequestMapping("/api/merchantApplications")
 public class MerchantApplicationController {
     private MerchantApplicationService merchantApplicationService;
     @Autowired
