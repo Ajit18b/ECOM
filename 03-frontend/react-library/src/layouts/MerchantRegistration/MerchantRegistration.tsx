@@ -18,7 +18,7 @@ export const MerchantRegistration = () => {
             setDisplaySuccess(false);
             return;
         }
-        const url = `http://localhost:8080/api/merchantApplication/apply`;
+        const url = `http://localhost:8080/api/merchantApplications/apply`;
         const applicationRequestModel: MerchantApplicationModel = new MerchantApplicationModel(firstName, lastName, businessName, merchantEmail, merchantPhone, remark);
         const requestOptions = {
             method: 'POST',
