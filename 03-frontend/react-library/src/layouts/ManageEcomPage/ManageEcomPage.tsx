@@ -89,7 +89,7 @@ export const ManageEcomPage = () => {
                         aria-labelledby="nav-querries-tab">
                         {querriesClick ? <AdminMessages /> : <></>}
                     </div>
-                    <p></p>
+
                     <div className="tab-pane fade" id="nav-merchant-application" role="tabpanel"
                         aria-labelledby="nav-application-tab">
                         {merchantApplicationClick ? <MerchantApplications /> : <></>}

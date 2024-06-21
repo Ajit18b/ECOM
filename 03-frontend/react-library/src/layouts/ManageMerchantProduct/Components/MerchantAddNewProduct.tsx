@@ -17,22 +17,50 @@ export const MerchantAddNewProduct = () => {
     const [displayWarning, setDisplayWarning] = useState(false);
     const [displaySuccess, setDisplaySuccess] = useState(false);
 
+    /**
+     * Updates the category field with the provided value.
+     * 
+     * @param {string} value - The new value for the category field.
+     */
     function categoryField(value: string) {
+        // Call the setCategory function with the provided value.
         setCategory(value);
     }
+
+    /**
+     * Handles image uploads and converts the uploaded image to a base64-encoded string.
+     * 
+     * @param {any} e - The event object triggered when an image is selected.
+     */
     async function base64ConversionForImages(e: any) {
+        // Check if a file is attached to the event target.
         if (e.target.files[0]) {
+            // Call the getBase64 function with the selected file.
             getBase64(e.target.files[0]);
         }
     }
 
+    /**
+     * Converts a file to a base64-encoded string using the FileReader API.
+     * 
+     * @param {any} file - The file to be converted.
+     */
     function getBase64(file: any) {
+        // Create a new FileReader object.
         let reader = new FileReader();
+
+        // Read the file as a data URL.
         reader.readAsDataURL(file);
+
+        // Set up an event listener for the load event.
         reader.onload = function () {
+            // Call the setSelectedImage function with the base64-encoded string.
             setSelectedImage(reader.result);
         };
+
+        // Set up an event listener for the error event.
         reader.onerror = function (error) {
+            // Log an error message to the console if an error occurs.
             console.log('Error', error);
         }
     }

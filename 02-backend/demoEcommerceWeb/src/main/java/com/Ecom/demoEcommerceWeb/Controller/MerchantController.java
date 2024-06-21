@@ -1,6 +1,7 @@
 package com.Ecom.demoEcommerceWeb.Controller;
 
 // Importing necessary services, utility classes, request models, and annotations
+import com.Ecom.demoEcommerceWeb.Service.MerchantApplicationService;
 import com.Ecom.demoEcommerceWeb.Service.MerchantService;
 import com.Ecom.demoEcommerceWeb.Utils.ExtractJWT;
 import com.Ecom.demoEcommerceWeb.requestmodels.AddProductRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class MerchantController {
     // Private field for the MerchantService instance
     private MerchantService merchantService;
+    private MerchantApplicationService merchantApplicationService;
 
     /**
      * Constructor to inject the MerchantService instance.
@@ -105,5 +107,9 @@ public class MerchantController {
         }
         // Call the MerchantService method to delete the product
         merchantService.deleteProduct(productId);
+    }
+    @DeleteMapping("/secure/delete/merchantapplication")
+    public void deleteApplicationMerchant(@RequestParam Long applicationId) throws Exception {
+
     }
 }

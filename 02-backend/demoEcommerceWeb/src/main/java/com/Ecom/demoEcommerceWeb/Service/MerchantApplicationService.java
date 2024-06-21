@@ -3,6 +3,7 @@ package com.Ecom.demoEcommerceWeb.Service;
 // Importing necessary dependencies
 import com.Ecom.demoEcommerceWeb.dao.MerchantApplicationRepository;
 import com.Ecom.demoEcommerceWeb.entity.MerchantApplication;
+import com.Ecom.demoEcommerceWeb.entity.Product;
 import com.Ecom.demoEcommerceWeb.requestmodels.AdminApplicationApproval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,4 +72,19 @@ public class MerchantApplicationService {
         // Save the updated merchant application
         merchantApplicationRepository.save(merchantApplication.get());
     }
+//    public void deleteApplication(Long applicationId) throws Exception {
+//        Optional<Product> product = MerchantApplicationRepository.findById(productId);
+//
+//        if (!product.isPresent()) {
+//            throw new Exception("Product not found");
+//        }
+//
+//        // Delete the product
+//        productRepository.delete(product.get());
+//        // Remove related checkout records
+//        checkoutRepository.deleteAllByProductId(productId);
+//        // Remove related review records
+//        reviewRepository.deleteAllByProductId(productId);
+//    }
+
 }
