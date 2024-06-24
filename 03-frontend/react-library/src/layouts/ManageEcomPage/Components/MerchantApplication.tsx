@@ -19,11 +19,11 @@ export const MerchantApplication: React.FC<{
         }
     }
     function submitDeclineBtn() {
-        if (props.application.id !== null && response !== '') {
+        if (props.application.id !== null) {
             props.submitDeclineResponseToApplication(props.application.id, response);
             setDisplayWarning(false);
         } else {
-            setDisplayWarning(true);
+            setDisplayWarning(false);
         }
     }
 

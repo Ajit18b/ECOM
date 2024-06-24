@@ -1,9 +1,6 @@
 package com.Ecom.demoEcommerceWeb.config;
 
-// Importing Okta's OAuth library
 import com.okta.spring.boot.oauth.Okta;
-
-// Importing Spring Security and configuration classes
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,29 +8,18 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.accept.ContentNegotiationStrategy;
 import org.springframework.web.accept.HeaderContentNegotiationStrategy;
 
-/**
- * Configuration class for security settings.
- */
 @Configuration
 public class SecurityConfiguration {
 
-    /**
-     * Bean method to create a SecurityFilterChain instance.
-     *
-     * @param http the HttpSecurity instance
-     * @return the SecurityFilterChain instance
-     * @throws Exception if an error occurs during configuration
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        // Disable Cross Site Request Forgery (CSRF) protection
+        // Disable Cross Site Request Forgery
         http.csrf().disable();
 
-        // Configure authorization for specific endpoints
+        // Protect endpoints at /api/<type>/secure
         http.authorizeRequests(configurer ->
                         configurer
-                                // Protect endpoints at /api/<type>/secure
                                 .antMatchers("/api/products/secure/**",
                                         "/api/reviews/secure/**",
                                         "/api/messages/secure/**",
@@ -41,22 +27,28 @@ public class SecurityConfiguration {
                                         "/api/merchant/secure/**",
                                         "/api/merchantApplications/secure/**")
                                 .authenticated())
-                // Configure OAuth2 resource server
                 .oauth2ResourceServer()
                 .jwt();
 
-        // Add CORS filters to enable cross-origin requests
+        // Add CORS filters
         http.cors();
 
-        // Add a content negotiation strategy to determine the response format
+        // Add content negotiation strategy
         http.setSharedObject(ContentNegotiationStrategy.class,
                 new HeaderContentNegotiationStrategy());
 
-        // Configure Okta to return a friendly error response for 401 unauthorized requests
+        // Force a non-empty response body for 401's to make the response friendly
         Okta.configureResourceServer401ResponseBody(http);
 
-        // Build and return the SecurityFilterChain instance
         return http.build();
     }
 
 }
+
+
+
+
+
+
+
+

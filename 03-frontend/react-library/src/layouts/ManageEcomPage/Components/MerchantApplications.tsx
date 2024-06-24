@@ -92,11 +92,11 @@ export const MerchantApplications = () => {
         }
     }
     async function submitDeclineResponseToApplication(id: number, response: string) {
-        const url = `http://localhost:8080/api/merchantApplications/secure/admin/application`;
-        if (authState && authState?.isAuthenticated && id !== null && response !== '') {
+        const url = `http://localhost:8080/api/merchantApplications/secure/admin/delete/application/?applicationId=${id}`;
+        if (authState && authState?.isAuthenticated && id !== null) {
             const merchantApplicationResponseModel: MerchantApplicationResponse = new MerchantApplicationResponse(id, response);
             const requestOptions = {
-                method: 'PUT',
+                method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
                     'Content-Type': 'application/json'
@@ -108,7 +108,7 @@ export const MerchantApplications = () => {
             if (!applicationAdminRequestModelResponse.ok) {
                 throw new Error('Something went wrong!');
             }
-            setBtnSubmit(btnSubmit);
+            setBtnSubmit(!btnSubmit);
         }
     }
 
@@ -118,13 +118,13 @@ export const MerchantApplications = () => {
         <div className='mt-3'>
             {appliactions.length > 0 ?
                 <>
-                    <h5>Pending Tickets to Response: </h5>
+                    <h5>Pending Applications to Response: </h5>
                     {appliactions.map(application => (
                         <MerchantApplication application={application} key={application.id} submitResponseToApplication={submitResponseToApplication} submitDeclineResponseToApplication={submitDeclineResponseToApplication} />
                     ))}
                 </>
                 :
-                <h5>No pending Tickets</h5>
+                <h5>No pending Application</h5>
             }
             {totalPages > 1 && <Pagination currentPage={currentPage} totalPages={totalPages} paginate={paginate} />}
         </div>
