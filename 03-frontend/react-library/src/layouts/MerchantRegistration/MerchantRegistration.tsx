@@ -49,7 +49,7 @@ export const MerchantRegistration = () => {
         setPhoneValidation(!validatePhoneNumber(merchantPhone));
         setEmptyWarningRemark(!remark);
 
-        if (!firstName || !lastName || !businessName || !merchantEmail || !merchantPhone || !remark) {
+        if (!firstName || !lastName || !businessName || !validateEmail(merchantEmail) || !validatePhoneNumber(merchantPhone) || !remark) {
             setDisplayWarning(true);
             setDisplaySuccess(false);
             window.scrollTo(0, 0);
