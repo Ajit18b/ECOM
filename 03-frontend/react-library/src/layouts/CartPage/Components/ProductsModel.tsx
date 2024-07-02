@@ -35,13 +35,23 @@ export const ProductsModel: React.FC<{ cartCurrentProduct: CartCurrentProducts, 
                                 </div>
                                 <hr />
                                 <div className="list-group mt-3">
-                                    <button onClick={() => props.orderProduct(props.cartCurrentProduct.product.id)} data-bs-dismiss="modal" className="list-group-item list-group-item-action"
+                                    <button
+                                        onClick={() => {
+                                            props.orderProduct(props.cartCurrentProduct.product.id);
+                                            window.location.reload();
+                                        }}
+                                        data-bs-dismiss="modal"
+                                        className="list-group-item list-group-item-action"
                                         aria-current="true">
                                         Order this Product now
                                     </button>
                                 </div>
                                 <div className="list-group mt-3">
-                                    <button onClick={() => props.removeProduct(props.cartCurrentProduct.product.id)} data-bs-dismiss="modal" className="list-group-item list-group-item-action"
+                                    <button
+                                        onClick={() => { 
+                                            props.removeProduct(props.cartCurrentProduct.product.id); 
+                                            window.location.reload();
+                                        }} data-bs-dismiss="modal" className="list-group-item list-group-item-action"
                                         aria-current="true">
                                         Remove this Product now
                                     </button>

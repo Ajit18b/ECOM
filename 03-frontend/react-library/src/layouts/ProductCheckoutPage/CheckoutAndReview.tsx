@@ -7,17 +7,26 @@ export const CheckoutAndReview: React.FC<{
     currentCount: number, isAuthenticated: any, isCheckedout: boolean,
     checkoutProduct: any, isReviewLeft: boolean, submitReview: any
 }> = (props) => {
+
     function buttonRender() {
+
         if (props.isAuthenticated) {
             if (!props.isCheckedout && props.currentCount < 20) {
                 return (<p>
-                    <button onClick={props.checkoutProduct} className="btn btn-success btn-lg">
+                    <button
+                        onClick={() => {
+                            props.checkoutProduct();
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 50);
+                        }}
+                        className="btn btn-success btn-lg"
+                    >
                         Add To Cart
                     </button>
+
+
                     <p />
-                    {/* <button onClick={props.checkoutProduct} className="btn btn-primary btn-lg">
-                        Order Now
-                    </button> */}
                     <hr />
                     <Link to={"/cart"} className="btn btn-primary btn-sm">View all products in cart</Link>
                 </p >)

@@ -23,6 +23,8 @@ public class AdminController {
             throw new Exception("Administration page only");
         }
         adminService.increaseProductQuantity(productId);
+        adminService.increaseProductQuantity(productId);
+
     }
     @PutMapping("/secure/decrease/product/quantity")
     public void decreaseProductQuantity(@RequestHeader(value="Authorization") String token,
