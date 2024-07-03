@@ -8,7 +8,7 @@ export const HomePage = () => {
         <>
             <ExploreProducts />
             <Carousel />
-            {/* <Heros /> */}
+            <Heros />
             <EComServices />
         </>
     );

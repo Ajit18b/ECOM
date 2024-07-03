@@ -5,6 +5,7 @@ import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 import { Link } from "react-router-dom";
 import { EComServices } from "./EComServices";
 
+
 export const Carousel = () => {
     const [products, setProducts] = useState<ProductModel[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -47,6 +48,13 @@ export const Carousel = () => {
     const loadMoreCarousels = () => {
         setCarouselCount(prevCount => prevCount + 1);
     };
+    useEffect(() => {
+        // Scroll to the bottom when the carousel count changes
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+    }, [carouselCount]);
 
     if (isLoading) {
         return (
@@ -68,36 +76,42 @@ export const Carousel = () => {
             const startIndex = i * 18;
             const endIndex = startIndex + 18;
             carousels.push(
-                <div id={`carouselExampleControls${i}`} className="carousel carousel-dark slide mt-5 d-none d-lg-block" data-bs-interval="false" key={i}>
+                <div id={`carouselExampleControls${i}`} className="carousel carousel-dark slide mt-5 " data-bs-interval="false" key={i}>
+
+                    <div className="carousel-indicators">
+                        <button type="button" data-bs-target={`#carouselExampleControls${i}`} data-bs-slide-to="0" className="active" aria-current="true" aria-label={`Slide 1`}></button>
+                        <button type="button" data-bs-target={`#carouselExampleControls${i}`} data-bs-slide-to="1" aria-label={`Slide 2`}></button>
+                        <button type="button" data-bs-target={`#carouselExampleControls${i}`} data-bs-slide-to="2" aria-label={`Slide 3`}></button>
+                    </div>
                     <div className="carousel-inner">
-                        <div className="carousel-item active">
-                            <div className="row d-flex justify-content-center align-items-center">
+                        <div className="carousel-item active ">
+                            <div className="row d-flex justify-content-center align-items-center custom-carousel-height">
                                 {products.slice(startIndex, startIndex + 6).map(product => (
                                     <ReturnProduct product={product} key={product.id} />
                                 ))}
                             </div>
                         </div>
                         <div className="carousel-item">
-                            <div className="row d-flex justify-content-center align-items-center">
+                            <div className="row d-flex justify-content-center align-items-center custom-carousel-height">
                                 {products.slice(startIndex + 6, startIndex + 12).map(product => (
                                     <ReturnProduct product={product} key={product.id} />
                                 ))}
                             </div>
                         </div>
                         <div className="carousel-item">
-                            <div className="row d-flex justify-content-center align-items-center">
+                            <div className="row d-flex justify-content-center align-items-center custom-carousel-height">
                                 {products.slice(startIndex + 12, endIndex).map(product => (
                                     <ReturnProduct product={product} key={product.id} />
                                 ))}
                             </div>
                         </div>
                     </div>
-                    <button className="carousel-control-prev" type="button"
+                    <button className="carousel-control-prev custom-carousel-control" type="button"
                         data-bs-target={`#carouselExampleControls${i}`} data-bs-slide="prev">
                         <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span className="visually-hidden">Previous</span>
                     </button>
-                    <button className="carousel-control-next" type="button"
+                    <button className="carousel-control-next custom-carousel-control" type="button"
                         data-bs-target={`#carouselExampleControls${i}`} data-bs-slide="next">
                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
                         <span className="visually-hidden">Next</span>
@@ -122,11 +136,14 @@ export const Carousel = () => {
             </div>
             {products.length > carouselCount * 18 ? (
                 <div className="homepage-carousel-title mt-3">
-                    <button className="btn btn-outline-secondary btn-lg" onClick={loadMoreCarousels}>View More</button>
+                    <button className="btn btn-outline-secondary btn-lg" onClick={loadMoreCarousels} >View More</button>
                 </div>
             ) : (
-                // Empty else block for custom input
-                <div className="homepage-carousel-title mt-3">Custom</div>
+                <div className="homepage-carousel-title mt-3">
+                    <Link className="btn main-color btn-outline-light" to={`search`}>
+                        Explore More Products
+                    </Link>
+                </div>
             )}
         </div>
     );

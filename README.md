@@ -1,6 +1,6 @@
 E-commerce Demo Application Overview
 
-This project is a demo application for an e-commerce platform built using Java Spring Boot for the backend and React.js for the frontend. It provides a seamless experience for users to browse, select, and purchase products. Below is a detailed overview of the features and functionalities provided by the application:
+This project is a demo monolithic application for an e-commerce platform built using Java Spring Boot for the backend and React.js for the frontend. It provides a seamless experience for users to browse, select, and purchase products. Below is a detailed overview of the features and functionalities provided by the application:
 
 Key Features
 
@@ -8,6 +8,8 @@ Key Features
    - The main page of the application where users can browse all available products.
    - No login required to view the products.
    - Product details are visible to all users.
+   - Carousel to access the displayed products.
+   - User can see the review of the products without logging into the application.
 
 2. User Authentication:
    - Users have the option to register and login to the application.

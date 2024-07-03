@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="316e1a01-79f5-4b6e-b7c2-82d305e5c31b" name="Changes" comment="" />
+    <list default="true" id="316e1a01-79f5-4b6e-b7c2-82d305e5c31b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/02-backend/demoEcommerceWeb/src/main/java/com/Ecom/demoEcommerceWeb/Controller/MerchantApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/02-backend/demoEcommerceWeb/src/main/java/com/Ecom/demoEcommerceWeb/Controller/MerchantApplicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/03-frontend/react-library/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/03-frontend/react-library/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/03-frontend/react-library/src/layouts/HomePage/Components/Carousel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/03-frontend/react-library/src/layouts/HomePage/Components/Carousel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/03-frontend/react-library/src/layouts/HomePage/Components/ReturnProduct.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/03-frontend/react-library/src/layouts/HomePage/Components/ReturnProduct.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/03-frontend/react-library/src/layouts/HomePage/Homepage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/03-frontend/react-library/src/layouts/HomePage/Homepage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/03-frontend/react-library/src/layouts/SearchProductPage/SearchProductPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/03-frontend/react-library/src/layouts/SearchProductPage/SearchProductPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,35 +22,35 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Ajit18b"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ajit18b&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Ajit18b/ECOM.git",
-    "accountId": "3f154c80-a1fb-45e7-8c14-ba48a04083ea"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Ajit18b/ECOM.git&quot;,
+    &quot;accountId&quot;: &quot;3f154c80-a1fb-45e7-8c14-ba48a04083ea&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 1
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2h2R2nKMNlXVvbPNP9G0c1bKr9r" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/E_commerce_demo/02-backend/demoEcommerceWeb"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/E_commerce_demo/02-backend/demoEcommerceWeb&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

@@ -13,7 +13,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/merchantApplications")
 public class MerchantApplicationController {
-    private MerchantApplicationService merchantApplicationService;
+    private final MerchantApplicationService merchantApplicationService;
     @Autowired
     public  MerchantApplicationController(MerchantApplicationService merchantApplicationService)
     {
